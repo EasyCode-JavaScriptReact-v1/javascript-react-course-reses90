@@ -83,7 +83,7 @@ console.log(myObj);
 let frameworks = [4.7, 'Angular', '6Angular', 'React/Redux'];
 let x = 'google released ' + 'new version ' + frameworks[1] + Math.floor(frameworks[0]) + 'But real speed is ' + `${frameworks[frameworks.length - 1]}`;
 
-
+ 
 
 
 
