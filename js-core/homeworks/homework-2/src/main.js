@@ -2,7 +2,7 @@
 
 /*======================= TASK 1 Variant-1(hard) =====================*/
 
-function Variant1 () {
+function Solution1 () {
     
     let numbers = [25, 1];
     let project = 'проект';
@@ -19,7 +19,7 @@ function Variant1 () {
     
 };
 
-Variant1();
+Solution1();
 
 /*There is I trained to use .splice*/
 //let arr = ['Нужно', 'программистов', 'чтобы', 'сделать', 'project', '?'];
@@ -29,7 +29,7 @@ Variant1();
 
 /*======================= TASK 1 Variant-2(easy) =====================*/
 
-function Variant2 () {
+function Solution2 () {
     
     let numbers = [25, 1];
     let project = 'проект';
@@ -44,7 +44,7 @@ function Variant2 () {
     
 };
 
-Variant2();
+Solutin2();
 
 
 /*======================= TASK 2 =====================*/
@@ -81,16 +81,4 @@ console.log(myObj);
 /*======================= TASK 5 =====================*/
 
 let frameworks = [4.7, 'Angular', '6Angular', 'React/Redux'];
-let x = 'google released ' + 'new version ' + frameworks[1] + Math.floor(frameworks[0]) + 'But real speed is ' + `${frameworks[frameworks.length - 1]}`;
-
- 
-
-
-
-
-
-
-
-
-
-
+let x = `google released new version ${frameworks[1] + Math.floor(frameworks[0])} But real speed is ${frameworks[frameworks.length - 1]}`;
