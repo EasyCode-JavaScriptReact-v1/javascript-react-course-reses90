@@ -64,7 +64,13 @@
 // TASK 4
 
 function task4 () {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
     let checkNumber = 1;
+>>>>>>> c9f3e90... Task4
+>>>>>>> squashed commits
     let firstValue = Number(prompt('Enter first number'));
 
     if (isNaN(firstValue)) {
@@ -82,6 +88,107 @@ function task4 () {
     alert(sum);
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> squashed commits
+//task4();
+
+// TASK 5
+
+function helloToUser(userName) {
+    console.log(`Hello user`, userName)
+}
+
+helloToUser(`Nick`);
+
+function showNumber (number) {
+    console.log(number);
+}
+
+showNumber(100);
+
+function multiplicate (number) {
+    console.log(number * 2);
+}
+
+multiplicate(40);
+
+function greeting (name) {
+    return console.log(`greeting ${name}`);
+}
+
+const greetConst = greeting(`Nikita`);
+
+// TASK 6
+
+function task6 () {
+    
+    function firstIteration () {
+        let firstValue = Number(prompt('Enter first number'));
+        if (isNaN(firstValue)) {
+            return alert(`First prompt is NaN`), task6();
+        } else {
+            return firstValue;
+        }
+    }
+    
+    function secondIteretion () {
+        let secondValue = Number(prompt('Enter second number'));
+        if (isNaN(secondValue)) {
+            return alert(`Second prompt is NaN`), secondIteretion();
+        } else {
+            return secondValue;
+        }
+    }
+    
+    alert(firstIteration() + secondIteretion());
+}
+
+//task6();
+
+function tas6V2 () {
+    let array = [];
+    function check (num) {
+        if (isNaN(num)) {
+            return alert(`Input number is NaN`), num;
+        } else {
+            return array.push(num);
+        }
+    }
+    function firstItertion () {
+        let firstValue = Number(prompt('Enter first number'));
+        //return firstValue;
+    }
+    check(firstItertion());
+    function secondIteration () {
+        let secondValue = Number(prompt('Enter second number'));
+        //return secondValue;
+    }
+    check(secondIteration());
+    alert(array[0] + array[1]);
+    
+}
+tas6V2();
+
+
+// TASK 7
+
+function task7 (a, b, c) {
+    console.log(a + b + c);
+}
+
+task7(5, 5, 5);
+
+// TASK 8 
+ function task8 ({name}) {
+     console.log(`Hello`, name);
+ }
+<<<<<<< HEAD
+task8({name: `Nikita`});
+=======
+task8({name: `Nikita`});
+=======
 task4();
 
 
@@ -97,3 +204,5 @@ task4();
 
 
 
+>>>>>>> c9f3e90... Task4
+>>>>>>> squashed commits
