@@ -1,4 +1,5 @@
 /*
+
 Напишите функцию которая будет возвращать объект
 с свойством name, а значением будет первый аргумент функции
 */
@@ -18,7 +19,9 @@ console.log(someObject);
 */
 
 function toUpperCase(obj) {
-    return {name: obj.name.toUpperCase()};
+    return {
+        name: obj.name.toUpperCase(),
+    };
 }
 const objectWithName = { name: 'privet kak dela' };
 console.log(toUpperCase(objectWithName));
@@ -35,7 +38,7 @@ arr[1] = 'poka';
 arr[2] = 'zdrastvuite';
 
 function addToArray(arrParam, newElem) {
-  arrParam.push(newElem);
+  arrParam[arrParam.length] = newElem;
 }
 
 addToArray(arr, 34);
@@ -148,10 +151,9 @@ console.log(fizzBuzz(30));
 function super2(arg1, arg2, arg3, callback) {
     let array = [];
     array.push(arg1, arg2, arg3);
-    return array;
-}
-function callback () {
-    return super2();
+    callback(array);
 }
 
-console.log(super2(1, 2, 3, callback));
+super2(1, 2, 3, function (array) {
+    console.log(array);
+});
