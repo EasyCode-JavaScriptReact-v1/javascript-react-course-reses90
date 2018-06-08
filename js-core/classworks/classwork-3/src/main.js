@@ -147,12 +147,12 @@ function tas6V2 () {
     }
     function firstItertion () {
         let firstValue = Number(prompt('Enter first number'));
-        return firstValue;
+        //return firstValue;
     }
     check(firstItertion());
     function secondIteration () {
         let secondValue = Number(prompt('Enter second number'));
-        return secondValue;
+        //return secondValue;
     }
     check(secondIteration());
     alert(array[0] + array[1]);
