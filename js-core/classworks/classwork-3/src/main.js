@@ -64,6 +64,8 @@
 // TASK 4
 
 function task4 () {
+    let checkNumber = 1;
+
     let firstValue = Number(prompt('Enter first number'));
 
     if (isNaN(firstValue)) {
