@@ -64,6 +64,10 @@
 // TASK 4
 
 function task4 () {
+<<<<<<< HEAD
+=======
+    let checkNumber = 1;
+>>>>>>> c9f3e904615e91f3b55aac4bb6b8a62b948b7de3
     let firstValue = Number(prompt('Enter first number'));
 
     if (isNaN(firstValue)) {
@@ -81,6 +85,7 @@ function task4 () {
     alert(sum);
 }
 
+<<<<<<< HEAD
 //task4();
 
 // TASK 5
@@ -150,3 +155,20 @@ task7(5, 5, 5);
      console.log(`Hello`, name);
  }
 task8({name: `Nikita`});
+=======
+task4();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> c9f3e904615e91f3b55aac4bb6b8a62b948b7de3
