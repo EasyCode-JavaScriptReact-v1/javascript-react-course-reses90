@@ -64,6 +64,7 @@
 // TASK 4
 
 function task4 () {
+
     let firstValue = Number(prompt('Enter first number'));
 
     if (isNaN(firstValue)) {
@@ -80,6 +81,7 @@ function task4 () {
 
     alert(sum);
 }
+
 
 //task4();
 
