@@ -139,7 +139,31 @@ function task6 () {
     alert(firstIteration() + secondIteretion());
 }
 
-task6();
+//task6();
+
+function tas6V2 () {
+    let array = [];
+    function check (num) {
+        if (isNaN(num)) {
+            return alert(`Input number is NaN`), num;
+        } else {
+            return array.push(num);
+        }
+    }
+    function firstItertion () {
+        let firstValue = Number(prompt('Enter first number'));
+        //return firstValue;
+    }
+    check(firstItertion());
+    function secondIteration () {
+        let secondValue = Number(prompt('Enter second number'));
+        //return secondValue;
+    }
+    check(secondIteration());
+    alert(array[0] + array[1]);
+    
+}
+tas6V2();
 
 
 // TASK 7
