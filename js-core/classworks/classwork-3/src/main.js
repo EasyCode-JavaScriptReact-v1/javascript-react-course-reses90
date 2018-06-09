@@ -65,9 +65,14 @@
 
 function task4 () {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     let checkNumber = 1;
 >>>>>>> c9f3e904615e91f3b55aac4bb6b8a62b948b7de3
+=======
+    let checkNumber = 1;
+
+>>>>>>> 1a9c2c21e833f8ef755f016470caa97af68ce0b0
     let firstValue = Number(prompt('Enter first number'));
 
     if (isNaN(firstValue)) {
@@ -86,6 +91,9 @@ function task4 () {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1a9c2c21e833f8ef755f016470caa97af68ce0b0
 //task4();
 
 // TASK 5
@@ -178,6 +186,7 @@ task7(5, 5, 5);
  function task8 ({name}) {
      console.log(`Hello`, name);
  }
+<<<<<<< HEAD
 task8({name: `Nikita`});
 =======
 task4();
@@ -196,3 +205,6 @@ task4();
 
 
 >>>>>>> c9f3e904615e91f3b55aac4bb6b8a62b948b7de3
+=======
+task8({name: `Nikita`});
+>>>>>>> 1a9c2c21e833f8ef755f016470caa97af68ce0b0
