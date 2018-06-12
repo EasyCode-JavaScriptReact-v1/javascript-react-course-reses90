@@ -64,13 +64,7 @@
 // TASK 4
 
 function task4 () {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-    let checkNumber = 1;
->>>>>>> c9f3e90... Task4
->>>>>>> squashed commits
+
     let firstValue = Number(prompt('Enter first number'));
 
     if (isNaN(firstValue)) {
@@ -88,10 +82,6 @@ function task4 () {
     alert(sum);
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> squashed commits
 //task4();
 
 // TASK 5
@@ -184,25 +174,5 @@ task7(5, 5, 5);
  function task8 ({name}) {
      console.log(`Hello`, name);
  }
-<<<<<<< HEAD
 task8({name: `Nikita`});
-=======
-task8({name: `Nikita`});
-=======
-task4();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> c9f3e90... Task4
->>>>>>> squashed commits
