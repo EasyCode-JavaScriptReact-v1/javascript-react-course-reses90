@@ -174,8 +174,9 @@ function returnNewArray (arr) {
     
     for(let i = 0; i < arr.length; i++) {
         
-        if(arr[i].unknownAge === true) {
-            newArray.push(arr[i]);
+        let valueInsideArray = arr[i];
+        if(valueInsideArray.unknownAge === true) {
+            newArray.push(valueInsideArray);
         }
     }
     return newArray;
