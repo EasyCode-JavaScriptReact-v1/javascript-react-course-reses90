@@ -61,9 +61,9 @@ const task1 = function(data, number) {
             let dataElem = data[key];
             if(Array.isArray(dataElem)) {
               for(let i = 0; i < dataElem.length; i++) {
-                let elem2 = dataElem[i];
-                if(number < elem2) {
-                console.log(elem2);
+                let elem = dataElem[i];
+                if(number < elem) {
+                console.log(elem);
                 break;
                 } 
             }
@@ -76,10 +76,15 @@ task1(obj, 200);
 task1(arr, 55);
 
 
-
+//reverse string
 
 const myString = 'JavaScript is Awesome';
-const myStringInArray = myString.split(' ');
-myStringInArray.reverse();
-const myStringJoin = myStringInArray.join(' ');
-console.log();
+
+function reverseString(str) {
+    var newString = "";
+    for (var i = str.length - 1; i >= 0; i--) {
+        newString += str[i];
+    }
+    return newString;
+}
+console.log(reverseString(myString));
