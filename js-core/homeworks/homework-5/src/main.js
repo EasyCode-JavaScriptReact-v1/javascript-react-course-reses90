@@ -117,7 +117,7 @@ function capMe(arr) {
     
     for(let i = 0; i < arr.length; i++) {
         let elemOfArray = arr[i];
-        let valueOfElemToLowerCase = elemOfArray.toLocaleLowerCase();
+        let valueOfElemToLowerCase = elemOfArray.toLowerCase();
         let divideOnArray = valueOfElemToLowerCase.split('');
         let firstLetterToUpperCase = divideOnArray[0].toUpperCase();
         divideOnArray.shift();
