@@ -329,7 +329,7 @@ function countLetterA(str) {
     let strTransformToArray = str.split('');
     strTransformToArray.forEach(function(value, index, arr) {
         if(value === 'a') {
-            counterA += 1;
+           return counterA += 1;
         }
     });
     return counterA;
@@ -375,8 +375,8 @@ console.log(reverseEachWord('The Document Object Model (DOM) is a programming in
  * переворачиваются в обратном порядке
  * */
 
-function reverseEachWord2(str, boolean) {
-    if(boolean === true) {
+function reverseEachWord2(str, shouldSentceBeReversed) {
+    if(shouldSentceBeReversed === true) {
         let reverseStr = str.split(' ').reverse().join(' ');
         return reverseEachWord(reverseStr);
     } else {
@@ -469,29 +469,30 @@ console.log(createHashTags(listOfCompanys));
  * Выведите уникальные значения
  *
  * */
-
+/*Solution 1*/
 function uniqueElements(arr) {
     let newArray = [];
     const sortArr = arr.sort(function(a, b) {
         if(a > b) return 1;
+        if(a < b) return -1;
     });
-    for(let i = 0; i < sortArr.length; i++) {
-        const elem = sortArr[i];
-        const nextElem = sortArr[i + 1];
-        if(elem < nextElem) {
-            newArray.push(elem);
-        }         
-    }
+    sortArr.filter(function(value, index, arr) {
+        const nextValue = arr[index + 1];
+        if(value < nextValue) {
+            newArray.push(value);
+        }
+    });
     const lastElem = sortArr.pop();
     newArray.push(lastElem);
     return newArray;
 }
 
 //
-let notUniqArray = [1, 1, 2, 2, 2, 5, 10, 25, 30, 5, 1, 0, 22, 3, 10, 3];
+let notUniqArray = [1, 1, 2, 2, 2, 5, 10, 25, 30, 5, 1, 0, 22, 3, 10, 3, 50, 50, 50, 12, 12, 12, 12, 8, 102, 102, 102];
 //
 console.log(uniqueElements(notUniqArray)); //1,2,5,10,25,30,0,22,3,
 console.log(uniqueElements([1, 1, 2, 3, 3])); // 1,2,3
+
 
 /*
 *
