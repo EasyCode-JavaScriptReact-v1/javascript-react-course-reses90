@@ -105,25 +105,21 @@ let jun = {};
 //        return console.log(`ERROR ! add more methods`);
 //    }
 //}
-let counter = null;
 
 function methodCounter(obj, name, num, fn) {
-    let func = fn;
     let counter = num;
-    obj[name] = function() {
-        if(counter > 0) {
-            counter -= 1;
-            return console.log(counter), func;
-        }
-        if(num === 0) {
+    obj[name] = function(...args) {
+        counter--;
+        if(counter === 0) {
             return console.log(`ERROR ! add more methods`);
         }
+        return fn(args);
     }
 }
 
 methodCounter(jun, 'logger', 2, function (args){
-    let arrayWithArguments = [...arguments];
-    const sumArguments = arrayWithArguments.reduce(function(newValue, value) {
+
+    const sumArguments = args.reduce(function(newValue, value) {
         return newValue + value;
     }, 0);
     return sumArguments;
