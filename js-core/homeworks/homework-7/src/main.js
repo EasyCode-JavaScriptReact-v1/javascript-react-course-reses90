@@ -77,41 +77,61 @@ console.log(test.method()); //3
 
 let jun = {};
 
-function methodCounter(obj, name, num, fn) {
-    obj[name] = fn;
-    obj.counter = num;
-    obj.addCounter = function (quantity) {
-        obj.counter += quantity;
-        return console.log(`Counter was replenished  on ${obj.counter}`);
-    };
-    return function () {
-        return obj;
-    };
-}
+//function methodCounter(obj, name, num, fn) {
+//    obj[name] = fn;
+//    obj.counter = num;
+//    obj.addCounter = function (quantity) {
+//        obj.counter += quantity;
+//        return console.log(`Counter was replenished  on ${obj.counter}`);
+//    };
+//    return function () {
+//        return obj;
+//    };
+//}
+//
+//function sumLogger () {
+//    let arrayWithArguments = [...arguments];
+//    
+//    if(jun.counter > 0) {
+//        --jun.counter;
+//        
+//        const sumArguments = arrayWithArguments.reduce(function(newValue, value) {
+//            return newValue + value;
+//        }, 0);
+//        
+//        return console.log(`You can use this method else: ${jun.counter}; sum of arguments equal: ${sumArguments}.`);
+//        
+//    } else {
+//        return console.log(`ERROR ! add more methods`);
+//    }
+//}
+let counter = null;
 
-function sumLogger () {
-    let arrayWithArguments = [...arguments];
-    
-    if(jun.counter > 0) {
-        --jun.counter;
-        
-        const sumArguments = arrayWithArguments.reduce(function(newValue, value) {
-            return newValue + value;
-        }, 0);
-        
-        return console.log(`You can use this method else: ${jun.counter}; sum of arguments equal: ${sumArguments}.`);
-        
-    } else {
-        return console.log(`ERROR ! add more methods`);
+function methodCounter(obj, name, num, fn) {
+    let func = fn;
+    let counter = num;
+    obj[name] = function() {
+        if(counter > 0) {
+            counter -= 1;
+            return console.log(counter), func;
+        }
+        if(num === 0) {
+            return console.log(`ERROR ! add more methods`);
+        }
     }
 }
 
+methodCounter(jun, 'logger', 2, function (args){
+    let arrayWithArguments = [...arguments];
+    const sumArguments = arrayWithArguments.reduce(function(newValue, value) {
+        return newValue + value;
+    }, 0);
+    return sumArguments;
+});
 
-methodCounter(jun, 'logger', 2, sumLogger);
-
-jun.logger(1, 2, 3, 4); // 2, 10
-jun.logger(5, 5, 5, 5); // 1, 20
-jun.logger(5, 5); // ERROR ! add more methods
+console.log(jun.logger(1, 2, 3, 4)); // 2, 10
+console.log(jun.logger(5, 5, 5, 5)); // 1, 20
+console.log(jun.logger(5, 5)); // ERROR ! add more methods
 
 // @SUPER,
 
@@ -121,5 +141,5 @@ jun.logger(5, 5); // ERROR ! add more methods
  *
  * */
 
-jun.addCounter(10);
-jun.logger(5, 5);
+//jun.addCounter(10);
+//jun.logger(5, 5);
