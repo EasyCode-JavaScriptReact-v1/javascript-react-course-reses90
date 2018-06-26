@@ -1,0 +1,12 @@
+const myJson = {
+    "name": "my library",
+    "version": 10,
+    "dependency": {
+        "react": "^16.4.0",
+        "babel": false,
+    },
+}
+
+myJson.int = myJson;
+
+console.log(myJson);
