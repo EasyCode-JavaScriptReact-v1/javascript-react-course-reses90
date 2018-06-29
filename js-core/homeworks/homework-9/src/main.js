@@ -39,9 +39,6 @@ function goodDev(dev) {
             if(elem === requireElem) {
                 const successNotification = `${elem} ... success`;
                 return console.log(successNotification);
-            } else {
-                const failNotification = `${elem} ... fail`;
-                return console.log(failNotification);
             }
         });
         console.log(`---------------`);
@@ -49,16 +46,15 @@ function goodDev(dev) {
         
     if(this.experience && this.requirements) {
         const experienceArrayWithObjects = this.experience;
-        const emptyArray = [];
-        experienceArrayWithObjects.forEach((elem, index, arr) => {
-            const getAObjectfromExperience = arr[index];
-            const valueOfKey = Object.values(getAObjectfromExperience);
-            const transformValueToString = valueOfKey.join('');
-            emptyArray.push(transformValueToString);
+        const writeDownExperienceToArray = experienceArrayWithObjects.map((elem, index, arr) => {
+            const getAObjectfromExperience = elem;
+            const accessToProperty = Object.values(getAObjectfromExperience);
+            const transformValueToString = accessToProperty.join('');
+            return transformValueToString;
         });
         
         const requirements = this.requirements;
-        const concatArrays = emptyArray.concat(requirements);
+        const concatArrays = writeDownExperienceToArray.concat(requirements);
         const checkOnCommonSkills = concatArrays.sort(sortArray);
         
         checkOnCommonSkills.forEach((elem, index, arr) => {
@@ -68,9 +64,6 @@ function goodDev(dev) {
             if(elem === nextElem) {
                 const successNotification = `${elem} ... success`;
                 return console.log(successNotification);
-            } else if (elem !== nextElem && elem !== lastElem) {
-                const failNotification = `${elem} ... fail`;
-                console.log(failNotification);
             }
         });
         console.log(`---------------`);
@@ -113,23 +106,19 @@ let myObject = {
   ]
 };
 
-function compareAge(a, b) {
-    if(a.age > b.age)  return 1;
-    if(a.age < b.age)  return -1;
-}
-function compareName(a, b) {
-    if(a.name > b.name)  return 1;
-    if(a.name < b.name)  return -1;
-}
-
 myObject.myFilter = function(param) {
+    
+    function compare(a, b) {
+    if(a[param] > b[param])  return 1;
+    if(a[param] < b[param])  return -1;
+}
 
     if(param === `age`) {
-        const sortDatabase = this.database.sort(compareAge);
+        const sortDatabase = this.database.sort(compare);
         return sortDatabase;
     }
     if(param === `name`) {
-        const sortDatabase2 = this.database.sort(compareName);
+        const sortDatabase2 = this.database.sort(compare);
         return sortDatabase2;
     }
     
@@ -183,8 +172,8 @@ const moveZeroToEnd = (arr) => {
     let oldArrayWithoutZero = [];
     let newArray = [];
     
-    for(let i = 0; i < arr.length; i++) {
-        const elemOfArr = arr[i];
+    arr.forEach(elem => {
+        const elemOfArr = elem;
         
         if(elemOfArr !== 0) {
             oldArrayWithoutZero.push(elemOfArr);
@@ -193,7 +182,8 @@ const moveZeroToEnd = (arr) => {
         if(elemOfArr === 0) {
             newArray.push(elemOfArr);
         }
-    }
+    });
+
     return console.log(oldArrayWithoutZero.concat(newArray));
 }
 
@@ -218,17 +208,16 @@ const nameShuffler = (str) => {
 
 const capMe = (arr) => {
     
-    for(let i = 0; i < arr.length; i++) {
-        let elemOfArray = arr[i];
+    return arr.map(elem => {
+        let elemOfArray = elem;
         let valueOfElemToLowerCase = elemOfArray.toLowerCase();
         let divideOnArray = valueOfElemToLowerCase.split('');
         let firstLetterToUpperCase = divideOnArray[0].toUpperCase();
         divideOnArray.shift();
         divideOnArray.unshift(firstLetterToUpperCase);
         let joinUp = divideOnArray.join('');
-        arr[i] = joinUp;
-    }
-    return arr;
+        return joinUp;
+    });
 }
 
 
@@ -257,7 +246,7 @@ const capMe = (arr) => {
 //// fn.length == arguments.length
 //
 //function addMethod(object, name, fn) {
-//
+//    
 //}
 //
 //addMethod(junior, 'ok', function() {
