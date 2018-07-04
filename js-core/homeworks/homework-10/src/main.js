@@ -80,18 +80,17 @@ ezjQuery
  */
 
 let ezjQuery = {
-    collector: [],
     arrayWithOpenTags: [],
     arrayWithClosenTags: [],
     arrayWithStuctureWithValue: [],
     add(tagName, value) {
-        if([...arguments].length === 1) {
+        if(tagName && !value) {
             const openTag = `<${tagName}>`;
             const closenTag = `</${tagName}>`;
             this.arrayWithOpenTags.push(openTag);
             this.arrayWithClosenTags.unshift(closenTag);
         }
-        if([...arguments].length === 2) {
+        if(tagName && value) {
             const stuctureWithValue = `<${tagName}>${value}</${tagName}>`;
             this.arrayWithStuctureWithValue.push(stuctureWithValue);
         }
@@ -99,16 +98,13 @@ let ezjQuery = {
         return this;
     },
     render() {
-        const copyCollector = this.collector;
-        const firstIterationOfConcat = copyCollector.concat(this.arrayWithOpenTags);
-        const secondIterationOfConcat = firstIterationOfConcat.concat(this.arrayWithStuctureWithValue);
-        const thirdIterationOfConcat = secondIterationOfConcat.concat(this.arrayWithClosenTags);
+        const finalArray = [...this.arrayWithOpenTags, ...this.arrayWithStuctureWithValue, ...this.arrayWithClosenTags];
         
         this.arrayWithOpenTags = [];
         this.arrayWithClosenTags = [];
         this.arrayWithStuctureWithValue = [];
         
-        return thirdIterationOfConcat.join('');
+        return finalArray.join('');
     }
 };
 
@@ -140,3 +136,37 @@ console.log(bodyDiv); //<body><div></div></body>
  * $('body').add('li', 'hi').render() // <body><li>hi</li></body>
  *
  * */
+function dolar(tagName) {
+    let obj = {};
+    obj.arrayWithOpenTags = [];
+    obj.arrayWithClosenTags = [];
+    obj.arrayWithStuctureWithValue = [];
+    
+    obj.add = function (tagName, value) {
+        if(tagName && !value) {
+            const openTag = `<${tagName}>`;
+            const closenTag = `</${tagName}>`;
+            this.arrayWithOpenTags.push(openTag);
+            this.arrayWithClosenTags.unshift(closenTag);
+        }
+        if(tagName && value) {
+            const stuctureWithValue = `<${tagName}>${value}</${tagName}>`;
+            this.arrayWithStuctureWithValue.push(stuctureWithValue);
+        }
+        
+        return this;
+    };
+    obj.render = function () {
+        const finalArray = [...this.arrayWithOpenTags, ...this.arrayWithStuctureWithValue, ...this.arrayWithClosenTags];
+        
+        this.arrayWithOpenTags = [];
+        this.arrayWithClosenTags = [];
+        this.arrayWithStuctureWithValue = [];
+        
+        return finalArray.join('');
+    }
+    
+    if(tagName) {
+        return obj.add(tagName);
+    } else return obj;
+}
