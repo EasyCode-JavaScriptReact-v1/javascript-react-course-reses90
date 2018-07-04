@@ -241,28 +241,57 @@ const capMe = (arr) => {
  *
  * */
 
-//let junior = {};
-//
-//// fn.length == arguments.length
-//
-//function addMethod(object, name, fn) {
-//    
-//}
-//
-//addMethod(junior, 'ok', function() {
-//  console.log('zero arguments');
-//});
-//addMethod(junior, 'ok', function(one) {
-//  console.log('one arguments');
-//});
-//addMethod(junior, 'ok', function(one, two) {
-//  console.log('two arguments');
-//});
-//addMethod(junior, 'ok', function(one, two, three) {
-//  console.log('three arguments');
-//});
-//
-//junior.ok(1, 2, 3); // 'three arguments'
-//junior.ok(1, 2); // 'two arguments'
-//junior.ok(1); //'one arguments'
-//junior.ok(); //'zero arguments'
+let junior = {};
+
+// fn.length == arguments.length
+
+function addMethod(object, name, fn) {
+    
+    if(fn.length === 0) {
+        object.zeroArguments = fn;
+    }
+    if(fn.length === 1) {
+        object.oneArguments = fn;
+    }
+    if(fn.length === 2) {
+        object.twoArguments = fn;
+    }
+    if(fn.length === 3) {
+        object.threeArguments = fn;
+    }
+    
+    object[name] = ramification;
+}
+
+function ramification(...args) {
+    if(args.length === 0) {
+        return this.zeroArguments()
+    }
+    if(args.length === 1) {
+        return this.oneArguments()
+    }
+    if(args.length === 2) {
+        return this.twoArguments()
+    }
+    if(args.length === 3) {
+        return this.threeArguments()
+    }
+}
+
+addMethod(junior, 'ok', function() {
+  console.log('zero arguments');
+});
+addMethod(junior, 'ok', function(one) {
+  console.log('one arguments');
+});
+addMethod(junior, 'ok', function(one, two) {
+  console.log('two arguments');
+});
+addMethod(junior, 'ok', function(one, two, three) {
+  console.log('three arguments');
+});
+
+junior.ok(1, 2, 3); // 'three arguments'
+junior.ok(1, 2); // 'two arguments'
+junior.ok(1); //'one arguments'
+junior.ok(); //'zero arguments'
