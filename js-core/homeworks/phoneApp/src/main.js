@@ -1,3 +1,7 @@
+//function User() {
+//    return {};
+//}
+
 function PhoneApp() {
     this.storage = [];
 }
@@ -42,40 +46,46 @@ PhoneApp.prototype.formatedPhoneNumber = function(numberToSort) {
         
         let lastNumbers = joinRewritedArray.slice(7, joinRewritedArray.length);
         
-        const finalConstraction = bracketThisFirstThreeNumbers + 
+        const formatedPhoneNumber = bracketThisFirstThreeNumbers + 
               bracketThisSecondTwoNumbers + 
               bracketThisThirdTwoNumbers + 
               lastNumbers;
         
-        return finalConstraction;
+        return formatedPhoneNumber;
     } else {
         return console.log('EROR you had typed incorect number')
     }
 }    
 
-PhoneApp.prototype.add = function(name, number, surname = null, city = null, company = null) {
+//PhoneApp.prototype.add = function(name, number, surname = null, city = null, company = null) {
+//    const idNumber = this.storage.length + 1;
+//    const contact = new User();
+//    contact.id = idNumber;
+//    contact.name = name;
+//    contact.surname = surname;
+//    contact.number = this.formatedPhoneNumber(number);
+//    contact.city = city;
+//    contact.company = company;
+//    this.storage.push(contact);
+//}
+PhoneApp.prototype.add = function(object) {
     const idNumber = this.storage.length + 1;
-    const contact = {
-        id: idNumber,
-        name: name,
-        surname: surname,
-        number: this.formatedPhoneNumber(number),
-        city: city,
-        company: company
-    }
+    const contact = object;
+    contact.id = idNumber;
+    contact.number = this.formatedPhoneNumber(contact.number)
     this.storage.push(contact);
 }
 
 PhoneApp.prototype.filterByValue = function(key, value) {
-    return this.storage.filter((elem, index) => {
-        return elem[key] === value;
+    return this.storage.filter(user => {
+        return user[key] === value;
     });
 }
 
-PhoneApp.prototype.sortByKey = function(key) {
-    const sortFunction = function(a, b) {
-        if(a[key] > b[key]) return 1;
-        if(a[key] < b[key]) return -1;
+PhoneApp.prototype.sortUsersByValue = function(key) {
+    const sortFunction = function(value, nextValue) {
+        if(value[key] > nextValue[key]) return 1;
+        if(value[key] < nextValue[key]) return -1;
     }
     
     let copyStorage = [...this.storage]
@@ -105,14 +115,13 @@ PhoneApp.prototype.changeValueByIndex = function(index, key, value) {
 
 const test = new PhoneApp();
 
-test.add('Nikita', '1234567890', 'Balashov', 'Kharkiv');
-test.add('Nikita', '0987655321', 'Smith');
-test.add('Paul', '0893127823', 'Smith', 'Kharkiv');
-test.add('Paul', '0897612374', 'Balashov');
+test.add({name: 'Nikita', number: '1234567890', surname: 'Balashov', city: 'Kharkiv', company: null});
+test.add({name: 'Nikita', number: '0987655321', surname: 'Smith', city: null, comapny: null});
+test.add({name: 'Paul', number: '0893127823', surname: 'Smith', city: 'Kharkiv', company: null});
+test.add({name: 'Paul', number: '0897612374', surname: 'Balashov', city: null, comapny: null});
 
 console.log(test.storage);
 console.log(test.filterByValue('name', 'Nikita'));
 console.log(test.filterByValue('name', 'Paul'));
 console.log(test.filterByValue('city', 'Kharkiv'));
 console.log(test.filterByValue('surname', 'Balashov'));
-test.isNumber('099-13-15-100')
