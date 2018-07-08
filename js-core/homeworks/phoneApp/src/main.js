@@ -2,44 +2,50 @@ function PhoneApp() {
     this.storage = [];
 }
 
-PhoneApp.prototype.checkNumber = function(numberToCheck) {
-    const toStringThePredictNumber = numberToCheck.toString();
-    const toArrayTheString = toStringThePredictNumber.split('');
+PhoneApp.prototype.isNumber = function(stringToCheck) {
+    const toStringTheArgument = stringToCheck.toString();
+    const toArrayTheString = toStringTheArgument.split('');
     let flag;
     
-    toArrayTheString.forEach(elem => {
+    toArrayTheString.some(elem => {
         const toNumberElem = Number(elem);
         if(isNaN(toNumberElem)) {
             flag = false;
         }
     });
     
-    if(flag === false) {
-        return flag;
-    } else {
-        return true;
-    }
+    return flag !== false;
 }
 
-PhoneApp.prototype.sortNumber = function(numberToSort) {
-    if(this.checkNumber(numberToSort)) {
-        const toStringTheNumber = numberToSort.toString();
-        const firstThreeNumbers = toStringTheNumber.slice(0, 3);
+PhoneApp.prototype.formatedPhoneNumber = function(numberToSort) {
+    const toStringTheNumber = numberToSort.toString();
+    const toArrayTheString = toStringTheNumber.split('');
+    let rewritedArray = [];
+    
+    toArrayTheString.some(elem => {
+        if(elem !== '-') {
+            rewritedArray.push(elem)
+        }
+    });
+    
+    const joinRewritedArray = rewritedArray.join('')
+    
+    if(this.isNumber(joinRewritedArray)) {
+        const firstThreeNumbers = joinRewritedArray.slice(0, 3);
         const bracketThisFirstThreeNumbers = `(${firstThreeNumbers}) `;
         
-        const secondTwoNumbers = toStringTheNumber.slice(3, 5);
+        const secondTwoNumbers = joinRewritedArray.slice(3, 5);
         const bracketThisSecondTwoNumbers = `${secondTwoNumbers}-`;
         
-        const thirdTwoNumbers = toStringTheNumber.slice(5, 7);
+        const thirdTwoNumbers = joinRewritedArray.slice(5, 7);
         const bracketThisThirdTwoNumbers = `${thirdTwoNumbers}-`;
         
-        let lastNumbers = '';
-        for(let i = 7; i < toStringTheNumber.length; i++) {
-            const elem = toStringTheNumber[i];
-            lastNumbers += elem;
-        }
+        let lastNumbers = joinRewritedArray.slice(7, joinRewritedArray.length);
         
-        const finalConstraction = bracketThisFirstThreeNumbers + bracketThisSecondTwoNumbers + bracketThisThirdTwoNumbers + lastNumbers;
+        const finalConstraction = bracketThisFirstThreeNumbers + 
+              bracketThisSecondTwoNumbers + 
+              bracketThisThirdTwoNumbers + 
+              lastNumbers;
         
         return finalConstraction;
     } else {
@@ -53,7 +59,7 @@ PhoneApp.prototype.add = function(name, number, surname = null, city = null, com
         id: idNumber,
         name: name,
         surname: surname,
-        number: this.sortNumber(number),
+        number: this.formatedPhoneNumber(number),
         city: city,
         company: company
     }
@@ -80,14 +86,14 @@ PhoneApp.prototype.removeByIndex = function(index) {
     let firstHalf = [];
     let lastHalf = [];
     
-    for(let i = 0; i < index; i++) {
-        const elem = this.storage[i];
-        firstHalf.push(elem);
-    }
-    for(let i = index + 1; i < this.storage.length; i++) {
-        const elem = this.storage[i];
-        lastHalf.push(elem);
-    }
+    this.storage.forEach((elem, i) => {
+        if(i < index) {
+            firstHalf.push(elem);
+        }
+        if(i < this.storage.length && i > index) {
+            lastHalf.push(elem)
+        }
+    });
     
     this.storage = [...firstHalf, ...lastHalf];
 }
@@ -109,3 +115,4 @@ console.log(test.filterByValue('name', 'Nikita'));
 console.log(test.filterByValue('name', 'Paul'));
 console.log(test.filterByValue('city', 'Kharkiv'));
 console.log(test.filterByValue('surname', 'Balashov'));
+test.isNumber('099-13-15-100')
