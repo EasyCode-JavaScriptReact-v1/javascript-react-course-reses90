@@ -1,6 +1,10 @@
-//function User() {
-//    return {};
-//}
+function User(addArgument) {
+    this.name = addArgument.name;
+    this.surname = addArgument.surname;
+    this.number = addArgument.number;
+    this.city = addArgument.city;
+    this.company = addArgument.company;
+}
 
 function PhoneApp() {
     this.storage = [];
@@ -21,8 +25,8 @@ PhoneApp.prototype.isNumber = function(stringToCheck) {
     return flag !== false;
 }
 
-PhoneApp.prototype.formatedPhoneNumber = function(numberToSort) {
-    const toStringTheNumber = numberToSort.toString();
+PhoneApp.prototype.createFormatedPhoneNumber = function(phoneNumber) {
+    const toStringTheNumber = phoneNumber.toString();
     const toArrayTheString = toStringTheNumber.split('');
     let rewritedArray = [];
     
@@ -57,22 +61,11 @@ PhoneApp.prototype.formatedPhoneNumber = function(numberToSort) {
     }
 }    
 
-//PhoneApp.prototype.add = function(name, number, surname = null, city = null, company = null) {
-//    const idNumber = this.storage.length + 1;
-//    const contact = new User();
-//    contact.id = idNumber;
-//    contact.name = name;
-//    contact.surname = surname;
-//    contact.number = this.formatedPhoneNumber(number);
-//    contact.city = city;
-//    contact.company = company;
-//    this.storage.push(contact);
-//}
 PhoneApp.prototype.add = function(object) {
     const idNumber = this.storage.length + 1;
-    const contact = object;
+    const contact = new User(object);
     contact.id = idNumber;
-    contact.number = this.formatedPhoneNumber(contact.number)
+    contact.number = this.createFormatedPhoneNumber(contact.number)
     this.storage.push(contact);
 }
 
@@ -116,9 +109,9 @@ PhoneApp.prototype.changeValueByIndex = function(index, key, value) {
 const test = new PhoneApp();
 
 test.add({name: 'Nikita', number: '1234567890', surname: 'Balashov', city: 'Kharkiv', company: null});
-test.add({name: 'Nikita', number: '0987655321', surname: 'Smith', city: null, comapny: null});
+test.add({name: 'Nikita', number: '0987655321', surname: 'Smith', city: null, company: null});
 test.add({name: 'Paul', number: '0893127823', surname: 'Smith', city: 'Kharkiv', company: null});
-test.add({name: 'Paul', number: '0897612374', surname: 'Balashov', city: null, comapny: null});
+test.add({name: 'Paul', number: '0897612374', surname: 'Balashov', city: null, company: null});
 
 console.log(test.storage);
 console.log(test.filterByValue('name', 'Nikita'));
