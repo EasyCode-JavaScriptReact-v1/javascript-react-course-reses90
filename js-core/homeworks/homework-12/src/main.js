@@ -34,19 +34,22 @@
  *
  * */
 
-const ctx = {
-    req: {
-        PORT: 123,
-        url: 'google',
-    },
-    res: {
-        status: 1,
-        message: 'HELLO',
-        header: {
-            contentType: 'application/json'
+function Ctx() {
+    return{ req: {
+            PORT: 123,
+            url: 'google',
+        },
+        res: {
+            status: 1,
+            message: 'HELLO',
+         header: {
+                contentType: 'application/json'
+            }
         }
     }
  }
+
+const ctx = new Ctx();
 
 const next = function() {
     console.log("I'm NEXT");
@@ -88,31 +91,36 @@ function Human(object) {
     this.gender = object.gender;
     this.height = object.height;
     this.weigth = object.weigth;
+    this.inheritHuman = function() {
+        return this;
+    }
 }
 
-function Worker(object) {
+Human.prototype.Worker = function(object) {
     this.company = object.company;
     this.salary = object.salary;
     this.toWork = function() {
         return 'work';
     }
+    this.inheritProperties = this.inheritHuman();
 }
 
-function Student(object) {
+Human.prototype.Student = function(object) {
     this.university = object.university;
     this.grants = object.grants;
     this.toWatchSeries = function() {
         return`watch tv series`;
     }
+    this.inheritProperties = this.inheritHuman();
 }
 
 const vasya = new Human({name: 'Vasya', age: '30', gender: 'Male', height: '1.8 m', weigth: '80 kg'});
-vasya.__proto__ = new Worker({company: 'qwerty', salary: '007'});
+vasya.Worker({company: 'qwerty', salary: '007'});
 console.log(vasya);
 console.log(vasya.toWork());
 
 const sasha = new Human({name: 'Sasha', age: '18', gender: 'Male', height: '1.8 m', weigth: '70 kg'});
-sasha.__proto__ = new Student({university: 'ytrewq', grants: '700'});
+sasha.Student({university: 'ytrewq', grants: '700'});
 console.log(sasha);
 console.log(sasha.toWatchSeries());
 
@@ -127,3 +135,13 @@ console.log(sasha.toWatchSeries());
  *
 */
 
+function wraper(func) {
+    wraper.prototype.args = 22;
+    return wraper.args;
+}
+
+function sum(a, b) {
+    return a + b;
+}
+
+console.log(wraper(sum(2, 2)))
