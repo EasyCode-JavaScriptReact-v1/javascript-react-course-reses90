@@ -1,109 +1,154 @@
-function User(addArgument) {
-    this.name = addArgument.name;
-    this.surname = addArgument.surname;
-    this.number = addArgument.number;
-    this.city = addArgument.city;
-    this.company = addArgument.company;
-}
-
-function PhoneApp() {
-    this.storage = [];
-}
-
-PhoneApp.prototype.isNumber = function(stringToCheck) {
-    const toStringTheArgument = stringToCheck.toString();
-    const toArrayTheString = toStringTheArgument.split('');
-    let flag;
+class User{
+    constructor(object){
+        const generatorId = () => '_' + Math.random().toString(36).substr(2, 20);
+        
+        this.id = generatorId();
+        this.name = object.name;
+        this.surname = object.surname;
+        this.number = this.createFormatedPhoneNumber(object.number);
+        this.city = object.city;
+        this.company = object.company;
+    }
     
-    toArrayTheString.some(elem => {
-        const toNumberElem = Number(elem);
-        if(isNaN(toNumberElem)) {
-            flag = false;
+    isNumber(stringToCheck) {
+        const toArrayTheString = stringToCheck.split('');
+    
+        return toArrayTheString.every(elem => !isNaN(Number(elem)));
+    }
+    
+    createFormatedPhoneNumber(phoneNumber) {
+        if(!this.isNumber(phoneNumber)) {
+            return console.log('EROR you had typed incorect number')
         }
-    });
-    
-    return flag !== false;
-}
-
-PhoneApp.prototype.createFormatedPhoneNumber = function(phoneNumber) {
-    const toStringTheNumber = phoneNumber.toString();
-    const toArrayTheString = toStringTheNumber.split('');
-    let rewritedArray = [];
-    
-    toArrayTheString.some(elem => {
-        if(elem !== '-') {
-            rewritedArray.push(elem)
-        }
-    });
-    
-    const joinRewritedArray = rewritedArray.join('')
-    
-    if(this.isNumber(joinRewritedArray)) {
-        const firstThreeNumbers = joinRewritedArray.slice(0, 3);
+        
+        const firstThreeNumbers = phoneNumber.slice(0, 3);
         const bracketThisFirstThreeNumbers = `(${firstThreeNumbers}) `;
         
-        const secondTwoNumbers = joinRewritedArray.slice(3, 5);
+        const secondTwoNumbers = phoneNumber.slice(3, 5);
         const bracketThisSecondTwoNumbers = `${secondTwoNumbers}-`;
         
-        const thirdTwoNumbers = joinRewritedArray.slice(5, 7);
+        const thirdTwoNumbers = phoneNumber.slice(5, 7);
         const bracketThisThirdTwoNumbers = `${thirdTwoNumbers}-`;
         
-        let lastNumbers = joinRewritedArray.slice(7, joinRewritedArray.length);
+        let lastNumbers = phoneNumber.slice(7, phoneNumber.length);
         
         const formatedPhoneNumber = bracketThisFirstThreeNumbers + 
-              bracketThisSecondTwoNumbers + 
-              bracketThisThirdTwoNumbers + 
-              lastNumbers;
+            bracketThisSecondTwoNumbers + 
+            bracketThisThirdTwoNumbers + 
+            lastNumbers;
         
         return formatedPhoneNumber;
-    } else {
-        return console.log('EROR you had typed incorect number')
-    }
-}    
-
-PhoneApp.prototype.add = function(object) {
-    const idNumber = this.storage.length + 1;
-    const contact = new User(object);
-    contact.id = idNumber;
-    contact.number = this.createFormatedPhoneNumber(contact.number)
-    this.storage.push(contact);
+    } 
+    
 }
 
-PhoneApp.prototype.filterByValue = function(key, value) {
-    return this.storage.filter(user => {
-        return user[key] === value;
-    });
-}
-
-PhoneApp.prototype.sortUsersByValue = function(key) {
-    const sortFunction = function(value, nextValue) {
-        if(value[key] > nextValue[key]) return 1;
-        if(value[key] < nextValue[key]) return -1;
+class PhoneApp{
+    constructor() {
+        this.storage = [];
     }
     
-    let copyStorage = [...this.storage]
-    return copyStorage.sort(sortFunction);
-}
-
-PhoneApp.prototype.removeByIndex = function(index) {
-    let firstHalf = [];
-    let lastHalf = [];
+    add(object) {
+        const contact = new User(object);
+        this.storage.push(contact);
+    }
     
-    this.storage.forEach((elem, i) => {
-        if(i < index) {
-            firstHalf.push(elem);
-        }
-        if(i < this.storage.length && i > index) {
-            lastHalf.push(elem)
-        }
-    });
+    filterByValue(key, value) {
+        return this.storage.filter(user => user[key] === value)
+    }
     
-    this.storage = [...firstHalf, ...lastHalf];
-}
-
-PhoneApp.prototype.changeValueByIndex = function(index, key, value) {
-    const elem = this.storage[index];
-    elem[key] = value;
+    sortUsersByValue(key) {
+        const sortFunction = function(value, nextValue) {
+            if(value[key] > nextValue[key]) return 1;
+            if(value[key] < nextValue[key]) return -1;
+        }
+    
+        let copyStorage = [...this.storage]
+        return copyStorage.sort(sortFunction);
+    }
+    
+    searchUserById(id) {
+        return this.storage.findIndex(user => user.id === id)
+    }
+    
+    searchUserByName(name) {
+        return this.storage.findIndex(user => user.name === name)
+    }
+    
+    searchUserBySurname(surname) {
+        return this.storage.findIndex(user => user.surname === surname)
+    }
+    
+    removeById(id) {
+        let firstHalf = [];
+        let lastHalf = [];
+        const userWithCorrectId = this.searchUserById(id);
+        
+        this.storage.forEach((user, i) => {
+            
+            if(i < userWithCorrectId) {
+                firstHalf.push(user);
+            }
+            if(i < this.storage.length && i > userWithCorrectId) {
+                lastHalf.push(user)
+            }
+        });
+    
+        this.storage = [...firstHalf, ...lastHalf];
+    }
+    
+    removeByName(name) {
+        let firstHalf = [];
+        let lastHalf = [];
+        const userWithCorrectName = this.searchUserByName(name);
+        
+        this.storage.forEach((user, i) => {
+            
+            if(i < userWithCorrectName) {
+                firstHalf.push(user);
+            }
+            if(i < this.storage.length && i > userWithCorrectName) {
+                lastHalf.push(user)
+            }
+        });
+    
+        this.storage = [...firstHalf, ...lastHalf];
+    }
+    
+    removeBySurname(surname) {
+        let firstHalf = [];
+        let lastHalf = [];
+        const userWithCorrectSurname = this.searchUserBySurname(surname);
+        
+        this.storage.forEach((user, i) => {
+            
+            if(i < userWithCorrectSurname) {
+                firstHalf.push(user);
+            }
+            if(i < this.storage.length && i > userWithCorrectSurname) {
+                lastHalf.push(user)
+            }
+        });
+    
+        this.storage = [...firstHalf, ...lastHalf];
+    }
+    
+    editAnyUserValueByName(id, key, value) {
+        const userWithCorrectName = this.searchUserById(id);
+        const elem = this.storage[userWithCorrectName];
+        elem[key] = value;
+    }
+    
+    editAnyUserValueByName(name, key, value) {
+        const userWithCorrectName = this.searchUserByName(name);
+        const elem = this.storage[userWithCorrectName];
+        elem[key] = value;
+    }
+    
+    editAnyUserValueBySurname(surname, key, value) {
+        const userWithCorrectName = this.searchUserBySurname(surname);
+        const elem = this.storage[userWithCorrectName];
+        elem[key] = value;
+    }
 }
 
 const test = new PhoneApp();
