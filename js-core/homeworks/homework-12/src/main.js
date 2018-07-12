@@ -34,8 +34,14 @@
  *
  * */
 
-function Ctx() {
-    return{ req: {
+const next = function() {
+    console.log("I'm NEXT");
+}
+
+function Http() { }
+
+Http.prototype.createServer = function(fn) {
+    const ctx = { req: {
             PORT: 123,
             url: 'google',
         },
@@ -47,31 +53,24 @@ function Ctx() {
             }
         }
     }
- }
-
-const ctx = new Ctx();
-
-const next = function() {
-    console.log("I'm NEXT");
-}
-
-function Http() { }
-Http.prototype.createServer = function(fn) {
-    this.temp = fn;
+    
+    
+    this.callback = () => {
+        return fn(ctx, next())
+    }
     return this;
 }
 
 Http.prototype.listen = function(PORT, host) {
     console.log(`https://${host}:${PORT}`);
-    this.temp(ctx, next);
-    this.temp = null;
+    this.callback();
+    this.callback = null;
     
     return this;
 }
 
 const server = new Http().createServer(function(ctx, next) {
     console.log(ctx);
-    next();
 }).listen(3000, 'localhost');
 
 
@@ -91,36 +90,34 @@ function Human(object) {
     this.gender = object.gender;
     this.height = object.height;
     this.weigth = object.weigth;
-    this.inheritHuman = function() {
-        return this;
-    }
 }
 
-Human.prototype.Worker = function(object) {
+function Worker(object) {
     this.company = object.company;
     this.salary = object.salary;
     this.toWork = function() {
         return 'work';
     }
-    this.inheritProperties = this.inheritHuman();
+    Human.call(this, object)
+    Worker.prototype = new Human(object);
 }
 
-Human.prototype.Student = function(object) {
+
+function Student(object) {
     this.university = object.university;
     this.grants = object.grants;
     this.toWatchSeries = function() {
         return`watch tv series`;
     }
-    this.inheritProperties = this.inheritHuman();
+    Human.call(this, object)
+    Student.prototype = new Human(object);
 }
 
-const vasya = new Human({name: 'Vasya', age: '30', gender: 'Male', height: '1.8 m', weigth: '80 kg'});
-vasya.Worker({company: 'qwerty', salary: '007'});
+let vasya = new Worker({name: 'Vasya', age: '30', gender: 'Male', height: '1.8 m', weigth: '80 kg', company: 'qwerty', salary: '007'});
 console.log(vasya);
 console.log(vasya.toWork());
 
-const sasha = new Human({name: 'Sasha', age: '18', gender: 'Male', height: '1.8 m', weigth: '70 kg'});
-sasha.Student({university: 'ytrewq', grants: '700'});
+let sasha = new Student({name: 'Sasha', age: '18', gender: 'Male', height: '1.8 m', weigth: '70 kg', university: 'ytrewq', grants: '700'});
 console.log(sasha);
 console.log(sasha.toWatchSeries());
 
@@ -136,12 +133,15 @@ console.log(sasha.toWatchSeries());
 */
 
 function wraper(func) {
-    wraper.prototype.args = 22;
-    return wraper.args;
+    return (...args) => {
+        console.log(args);
+        return func(...args);
+    }
 }
 
 function sum(a, b) {
     return a + b;
 }
 
-console.log(wraper(sum(2, 2)))
+const test = wraper(sum);
+console.log(test(10, 12))
