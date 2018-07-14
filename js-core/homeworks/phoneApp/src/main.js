@@ -21,23 +21,7 @@ class User{
             return console.log('EROR you had typed incorect number')
         }
         
-        const firstThreeNumbers = phoneNumber.slice(0, 3);
-        const bracketThisFirstThreeNumbers = `(${firstThreeNumbers}) `;
-        
-        const secondTwoNumbers = phoneNumber.slice(3, 5);
-        const bracketThisSecondTwoNumbers = `${secondTwoNumbers}-`;
-        
-        const thirdTwoNumbers = phoneNumber.slice(5, 7);
-        const bracketThisThirdTwoNumbers = `${thirdTwoNumbers}-`;
-        
-        let lastNumbers = phoneNumber.slice(7, phoneNumber.length);
-        
-        const formatedPhoneNumber = bracketThisFirstThreeNumbers + 
-            bracketThisSecondTwoNumbers + 
-            bracketThisThirdTwoNumbers + 
-            lastNumbers;
-        
-        return formatedPhoneNumber;
+        return phoneNumber.replace(/(.{0})/, '$1(').replace(/(.{4})/, '$1) ').replace(/(.{8})/, '$1-').replace(/(.{11})/, '$1-');    
     } 
     
 }
