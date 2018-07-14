@@ -38,7 +38,7 @@ console.log(solution([2, 2, 44, 44]));
 
 //-----------------------------------------------------------
 
-const someWebpackModule = `module.exports = {
+let someWebpackModule = `module.exports = {
     context: %%HOMEDIR%,
     entry: {
         app: "%%HOMEDIR%%/%%APP_DIR%%/%%APPNAME%%.js"
@@ -61,12 +61,17 @@ const someWebpackModule = `module.exports = {
  *
  * */
 
-const parseStr = str => {
-    const correctStr = str.replace(/%%HOMEDIR%./gmi, '"./JavaScript-Basic"').replace(/%%APP_DIR%%/gmi, 'fixtures/src').replace(/%%APPNAME%%/gmi, 'app.js').replace(/module.exports = /, '').replace(/'/gmi, '"').replace(/""/gmi, '"');
-    return correctStr;
+const parseStr = (find, change) => {
+    return someWebpackModule = someWebpackModule.replace(find, change);
 }
 
-console.log(parseStr(someWebpackModule));
+parseStr(/%%HOMEDIR%./gmi, '"./JavaScript-Basic"');
+parseStr(/%%APP_DIR%%/gmi, 'fixtures/src');
+parseStr(/%%APPNAME%%/gmi, 'app.js');
+parseStr(/'/gmi, '"');
+parseStr(/""/gmi, '"');
+
+console.log(someWebpackModule);
 
 /*
  TASK - 2
