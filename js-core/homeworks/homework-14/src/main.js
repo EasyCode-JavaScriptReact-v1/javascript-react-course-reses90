@@ -93,75 +93,129 @@ TASK 3
   вызывая методы объекта нужно создать dom-элементы
 */
 
-const quizz = {
-    create() {
-        const wraper = document.createElement('div');
-        const quizzBlock = document.createElement('div');
-        const quizTitle = document.createElement('header');
-        const quizzFooter = document.createElement('footer');
-        const quizzList = document.createElement('ol');
-        
-        wraper.setAttribute('class', 'wraper');
-        quizzBlock.setAttribute('class', 'quizz-block');
-        quizzList.setAttribute('class', 'quizz-list');
-        quizTitle.setAttribute('class', 'quizz-title');
-        quizTitle.textContent = 'Test of Programming';
-        
-        const questionTitles = ['What is the best program language?', 'What is your name?', 'What is the best car?'];
-        const answers = [
-            ['JS', 'JavaScript', 'HTML'],
-            ['Vasya', 'Petr', 'Vitya'],
-            ['Lada Sedan', 'Juguli', 'Priora']
-        ];
-        
-        function fillQuizzList() {
-            for(let i = 0; i < questionTitles.length; i++) {
-                const li = document.createElement('li');
-                const header = document.createElement('header');
-                const main = document.createElement('main');
-                
-                li.setAttribute('class', 'question-block');
-                header.setAttribute('class', 'question-title');
-                main.setAttribute('class', 'question-body');
-                header.textContent = questionTitles[i];
-                
-                for(let j = 0; j < answers[i].length; j++) {
-                    const label = document.createElement('label');
-                    const input = document.createElement('input');
-                    const p = document.createElement('p');
-                    
-                    label.setAttribute('class', 'answer');
-                    p.textContent = answers[i][j];
-                    input.setAttribute('type', 'checkbox');
-                    label.appendChild(input);
-                    label.appendChild(p);
-                    main.appendChild(label);
-                }
-                
-                li.appendChild(header);
-                li.appendChild(main);
-                quizzList.appendChild(li);
-            }
-        }
-        fillQuizzList();
-        
-        function fillQuizzFooter() {
-            const span = document.createElement('span');
-            quizzFooter.setAttribute('class', 'quizz-footer');
-            span.setAttribute('class', 'check-answers btn-shadow-effect');
-            span.textContent = 'Check Answers';
-            quizzFooter.appendChild(span);
-        }
-        fillQuizzFooter();
-        
-        quizzBlock.appendChild(quizTitle);
-        quizzBlock.appendChild(quizzList);
-        quizzBlock.appendChild(quizzFooter);
-        
-        wraper.appendChild(quizzBlock);
-        
-        document.body.appendChild(wraper);
-    }
-}
+const questions = [
+    {
+        questionName: 'question 1',
+        answers: [
+            'answer 1',
+            'answer 2',
+            'answer 3'
+        ],
+        rigthAnswer: [0]
+    },
+    {
+        questionName: 'question 2',
+        answers: [
+            'answer 1',
+            'answer 2',
+            'answer 3'
+        ],
+        rigthAnswer: [0]
+    },
+    {
+        questionName: 'question 3',
+        answers: [
+            'answer 1',
+            'answer 2',
+            'answer 3'
+        ],
+        rigthAnswer: [0]
+    },
+];
 
-quizz.create();
+const app = {
+    testHeaderName: 'Test of Programming',
+    
+    newElem(tagName) {
+        return document.createElement(tagName);
+    },
+    
+    setClass(target, className) {
+        target.setAttribute('class', className);
+    },
+    
+    setTypeCheckBox(target) {
+        target.setAttribute('type', 'checkbox');
+    },
+    
+    createStructure() {
+        /*make general structure for insertion*/
+        this.wraper = this.newElem('div');
+        this.quizzBlock = this.newElem('div');
+        this.quizTitle = this.newElem('header');
+        this.quizzList = this.newElem('ol');
+        this.quizzFooter = this.newElem('footer');
+        
+        /*bind those with CSS selectors, and assign testHeaderName*/
+        this.setClass(this.wraper, 'wraper');
+        this.setClass(this.quizzBlock, 'quizz-block');
+        this.setClass(this.quizTitle, 'quizz-title');
+        this.setClass(this.quizzList, 'quizz-list');
+        this.setClass(this.quizzFooter, 'quizz-footer');
+        this.quizTitle.textContent = this.testHeaderName;
+    },
+    
+    fillQuizzList() {
+        const li = this.newElem('li');
+        this.setClass(li, 'question-block');
+        
+        questions.forEach(question => {
+            const header = this.newElem('header');
+            const main = this.newElem('main');
+            
+            this.setClass(header, 'question-title');
+            this.setClass(main, 'question-body');
+            
+            header.textContent = question.questionName;
+            
+            question.answers.forEach(answer => {
+                const label = this.newElem('label');
+                const input = this.newElem('input');
+                const p = this.newElem('p');
+                
+                this.setClass(label, 'answer');
+                this.setTypeCheckBox(input);
+                
+                p.textContent = answer;
+                
+                label.appendChild(input);
+                label.appendChild(p);
+                main.appendChild(label);
+            });
+            
+            li.appendChild(header);
+            li.appendChild(main);
+        });
+        
+        this.quizzList.appendChild(li);
+    },
+    
+    fillQuizzFooter() {
+        const span = this.newElem('span');
+        
+        this.setClass(span, 'check-answers btn-shadow-effect');
+        span.textContent = 'Check Answers';
+        
+        this.quizzFooter.appendChild(span);
+    },
+    
+    compileAllStructure() {
+        this.createStructure();
+        this.fillQuizzList();
+        this.fillQuizzFooter();
+        
+        this.quizzBlock.appendChild(this.quizTitle);
+        this.quizzBlock.appendChild(this.quizzList);
+        this.quizzBlock.appendChild(this.quizzFooter);
+        
+        this.wraper.appendChild(this.quizzBlock);
+        
+        document.body.appendChild(this.wraper);
+    },
+    
+    render() {
+        this.compileAllStructure();
+    }
+};
+
+app.render();
