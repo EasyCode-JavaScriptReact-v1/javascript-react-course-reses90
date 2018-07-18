@@ -95,22 +95,27 @@ function Human(object) {
 function Worker(object) {
     this.company = object.company;
     this.salary = object.salary;
-    this.toWork = function() {
-        return 'work';
-    }
+    
     Human.call(this, object)
-    Worker.prototype = new Human(object);
 }
 
+Worker.prototype.constructor = Human;
+
+Worker.prototype.toWork = function() {
+    return 'work';
+}
 
 function Student(object) {
     this.university = object.university;
     this.grants = object.grants;
-    this.toWatchSeries = function() {
-        return`watch tv series`;
-    }
+    
     Human.call(this, object)
-    Student.prototype = new Human(object);
+}
+
+Student.prototype.construstor = Human;
+
+Student.prototype.toWatchSeries = function() {
+    return`watch tv series`;
 }
 
 let vasya = new Worker({name: 'Vasya', age: '30', gender: 'Male', height: '1.8 m', weigth: '80 kg', company: 'qwerty', salary: '007'});
