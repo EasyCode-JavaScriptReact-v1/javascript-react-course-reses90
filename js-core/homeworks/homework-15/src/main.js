@@ -188,6 +188,14 @@ const footerTabs = [
     'Add user'
 ];
 
+const idOfIcons = [
+    'search',
+    'th',
+    'pencil',
+    'user',
+    'plus'
+];
+
 const contactPage = {
     contactPageName: 'Contact',
     
@@ -330,13 +338,13 @@ const contactPage = {
         const nav = this.newElem('nav');
         this.setClass(nav, 'main-nav');
         
-        footerTabs.forEach(tab => {
+        footerTabs.forEach((tab, index) => {
             const link = this.newElem('a');
             const icon = this.newElem('span');
             const tabContent = this.newElem('span');
             
             this.setClass(link, 'tab');
-            this.setClass(icon, 'glyphicon glyphicon-pencil');
+            this.setClass(icon, `glyphicon glyphicon-${idOfIcons[index]}`);
             this.setClass(tabContent, 'tab-text');
             
             this.setHrefForLink(link, '#');
