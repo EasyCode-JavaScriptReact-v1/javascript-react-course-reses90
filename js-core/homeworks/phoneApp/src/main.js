@@ -18,10 +18,13 @@ class User{
     
     createFormatedPhoneNumber(phoneNumber) {
         if(!this.isNumber(phoneNumber)) {
-            return console.log('EROR you had typed incorect number')
+            return console.log('ERROR you had typed incorect number');
         }
         
-        return phoneNumber.replace(/(.{0})/, '$1(').replace(/(.{4})/, '$1) ').replace(/(.{8})/, '$1-').replace(/(.{11})/, '$1-');    
+        return phoneNumber.length === 10 
+        ? phoneNumber.replace(/(.{3})(.{2})(.{2})/g, '($1) $2-$3-')
+        : console.log('ERROR your number length isn\'t equal 10');
+        
     } 
     
 }
