@@ -11,11 +11,7 @@ TASK 0
 
 const solution = str => {
     const turnStrToArray = str.toLowerCase().split('');
-    const uniqueLetters = new Set();
-    
-    turnStrToArray.forEach(letter => {
-        uniqueLetters.add(letter);
-    });
+    const uniqueLetters = new Set(turnStrToArray);
     
     return uniqueLetters.size === 26 ? true : false;
 };
@@ -180,127 +176,138 @@ const users = [
     
 ];
 
-const footerTabs = [
-    'Contacts',
-    'Keypad',
-    'Edit contact',
-    'User',
-    'Add user'
-];
-
-const idOfIcons = [
-    'search',
-    'th',
-    'pencil',
-    'user',
-    'plus'
-];
-
-const contactPage = {
-    contactPageName: 'Contact',
-    
-    /* Simple fuctions for facilitate the live : START*/
+class HelpfulFunctionsForContactPage{
+    constructor() {};
     
     newElem(tagName) {
         return document.createElement(tagName);
-    },
+    };
     
     setClass(target, className) {
         target.setAttribute('class', className);
-    },
+    };
+    
+    setSimilarClassForManyTargets(arrayOfTargets, className) {
+        arrayOfTargets.forEach(target => {
+            target.setAttribute('class', className);
+        });
+    };
+    
+    setAnySimilarAttributeForManyTargets(arrayOfTargets, attributeName, value) {
+        arrayOfTargets.forEach(target => {
+            target.setAttribute(attributeName, value);
+        });
+    };
     
     setId(target, idName) {
         target.setAttribute('id', idName);
-    },
+    };
     
     setTextContent(target, content) {
         target.textContent = content;
-    },
+    };
     
     setLableFor(target, id) {
         target.setAttribute('for', id);  
-    },
+    };
     
     setTypeForInput(target, kindOfTypes) {
         target.setAttribute('type', kindOfTypes);
-    },
+    };
     
     setPlaceHolderForInput(target, value) {
         target.setAttribute('placeholder', value);  
-    },
+    };
     
     setHrefForLink(target, value) {
         target.setAttribute('href', value);
-    },
+    };
     
     setAriaHidden(target, boolean) {
           target.setAttribute('aria-hidden', boolean);
-    },
+    };
     
-    /* Simple fuctions for facilitate the live : END*/
+    appendManyChildrenToManyParents(arrayWithParentsAndWithChildren) {
+        arrayWithParentsAndWithChildren.forEach(family => {
+            const parent = family[0];
+            const children = family[1];
+            children.forEach(child => {
+               parent.appendChild(child);
+            }); 
+        });
+    };
+};
+
+class ContactPage{
+    constructor() {
+        this.contactPageName = 'Contact';
+        /*Simple fuctions for facilitate the live*/
+        this.helpfulFunctions = new HelpfulFunctionsForContactPage();
+    };
     
     createHeader() {
         /*Create header element and fill it*/
-        this.header = this.newElem('header');
-        const div = this.newElem('div');
-        const h2 = this.newElem('h2');
+        this.header = this.helpfulFunctions.newElem('header');
+        const div = this.helpfulFunctions.newElem('div');
+        const h2 = this.helpfulFunctions.newElem('h2');
+    
+        this.helpfulFunctions.setClass(this.header, 'header');
+        this.helpfulFunctions.setClass(div, 'container top-radius');
         
-        this.setClass(this.header, 'header');
-        this.setClass(div, 'container top-radius');
-        
-        this.setTextContent(h2, this.contactPageName);
+        this.helpfulFunctions.setTextContent(h2, this.contactPageName);
         
         div.appendChild(h2);
         this.header.appendChild(div);
-    },
+        document.body.appendChild(this.header);
+    };
     
     fillSearchForm() {
-        const formGroup = this.newElem('div');
-        const label = this.newElem('label');
-        const input = this.newElem('input');
+        const formGroup = this.helpfulFunctions.newElem('div');
+        const label = this.helpfulFunctions.newElem('label');
+        const input = this.helpfulFunctions.newElem('input');
         
-        this.setClass(formGroup, 'form-group');
-        this.setClass(label, 'sr-only');
-        this.setClass(input, 'form-control');
+        this.helpfulFunctions.setClass(formGroup, 'form-group');
+        this.helpfulFunctions.setClass(label, 'sr-only');
+        this.helpfulFunctions.setClass(input, 'form-control');
         
-        this.setId(input, 'search');
-        this.setTypeForInput(input, 'text');
-        this.setPlaceHolderForInput(input, 'search');
-        this.setLableFor(label, 'search');
+        this.helpfulFunctions.setId(input, 'search');
+        this.helpfulFunctions.setTypeForInput(input, 'text');
+        this.helpfulFunctions.setPlaceHolderForInput(input, 'search');
+        this.helpfulFunctions.setLableFor(label, 'search');
         
         formGroup.appendChild(label);
         formGroup.appendChild(input);
         
         return formGroup;
-    },
+    };
     
     fillTableContactList() {
         /*Create thead element and fill it*/
-        const thead = this.newElem('thead');
-        const trForThead = this.newElem('tr');
+        const thead = this.helpfulFunctions.newElem('thead');
+        const trForThead = this.helpfulFunctions.newElem('tr');
         
         contentForThead.forEach(contentElem => {
-            const th = this.newElem('th');
-            this.setTextContent(th, contentElem);
+            const th = this.helpfulFunctions.newElem('th');
+            this.helpfulFunctions.setTextContent(th, contentElem);
             trForThead.appendChild(th);
         });
         
         thead.appendChild(trForThead);
         
         /*Create tbody element and fill it*/
-        const tbody = this.newElem('tbody');
+        const tbody = this.helpfulFunctions.newElem('tbody');
         
         users.forEach(user => {
-            const tr = this.newElem('tr');
+            const tr = this.helpfulFunctions.newElem('tr');
             
             user.forEach(userInfo => {
-                const name = this.newElem('td');
-                const lastName = this.newElem('td');
-                const email = this.newElem('td');
+                const name = this.helpfulFunctions.newElem('td');
+                const lastName = this.helpfulFunctions.newElem('td');
+                const email = this.helpfulFunctions.newElem('td');
                 
-                this.setTextContent(name, userInfo.name);
-                this.setTextContent(lastName, userInfo.lastName);
-                this.setTextContent(email, userInfo.email);
+                this.helpfulFunctions.setTextContent(name, userInfo.name);
+                this.helpfulFunctions.setTextContent(lastName, userInfo.lastName);
+                this.helpfulFunctions.setTextContent(email, userInfo.email);
                 
                 tr.appendChild(name);
                 tr.appendChild(lastName);
@@ -312,75 +319,161 @@ const contactPage = {
         /*Append these element to table*/
         this.table.appendChild(thead);
         this.table.appendChild(tbody);
-    },
+    };
     
     createMainContent() {
-        this.main = this.newElem('main');
-        const conteiner = this.newElem('div');
-        this.setClass(conteiner, 'container');
+        this.main = this.helpfulFunctions.newElem('main');
+        const conteiner = this.helpfulFunctions.newElem('div');
+        this.helpfulFunctions.setClass(conteiner, 'container');
         
         /*There is implementation of search form*/
-        const searchForm = this.newElem('form');
-        this.setClass(searchForm, 'form-inline search-form');
+        const searchForm = this.helpfulFunctions.newElem('form');
+        this.helpfulFunctions.setClass(searchForm, 'form-inline search-form');
         searchForm.appendChild(this.fillSearchForm()); // fillSearchForm is above
         
         /*There is implementation of contact list (table)*/
-        this.table = this.newElem('table');
-        this.setClass(this.table, 'table table-hover contacts');
+        this.table = this.helpfulFunctions.newElem('table');
+        this.helpfulFunctions.setClass(this.table, 'table table-hover contacts');
         this.fillTableContactList();
         
         conteiner.appendChild(searchForm);
         conteiner.appendChild(this.table);
         this.main.appendChild(conteiner);
-    },
+        document.body.appendChild(this.main);
+    };
     
     fillFooter() {
-        const nav = this.newElem('nav');
-        this.setClass(nav, 'main-nav');
+        const nav = this.helpfulFunctions.newElem('nav');
+        this.helpfulFunctions.setClass(nav, 'main-nav');
         
-        footerTabs.forEach((tab, index) => {
-            const link = this.newElem('a');
-            const icon = this.newElem('span');
-            const tabContent = this.newElem('span');
-            
-            this.setClass(link, 'tab');
-            this.setClass(icon, `glyphicon glyphicon-${idOfIcons[index]}`);
-            this.setClass(tabContent, 'tab-text');
-            
-            this.setHrefForLink(link, '#');
-            this.setAriaHidden(icon, true);
-            this.setTextContent(tabContent, tab);
-            
-            link.appendChild(icon);
-            link.appendChild(tabContent);
-            nav.appendChild(link);
-        });
+        const linkForContact = this.helpfulFunctions.newElem('a');
+        const linkForKeypad = this.helpfulFunctions.newElem('a');
+        const linkForEditContact = this.helpfulFunctions.newElem('a');
+        const linkForUser = this.helpfulFunctions.newElem('a');
+        const linkForAddUser = this.helpfulFunctions.newElem('a');
         
-        /*Make first child active*/
+        const iconForContact = this.helpfulFunctions.newElem('span');
+        const iconForKeypad = this.helpfulFunctions.newElem('span');
+        const iconForEditContact = this.helpfulFunctions.newElem('span');
+        const iconForUser = this.helpfulFunctions.newElem('span');
+        const iconForAddUser = this.helpfulFunctions.newElem('span');
+        
+        const tabContentForContact = this.helpfulFunctions.newElem('span');
+        const tabContentForKeypad = this.helpfulFunctions.newElem('span');
+        const tabContentForEditContact = this.helpfulFunctions.newElem('span');
+        const tabContentForUser = this.helpfulFunctions.newElem('span');
+        const tabContentForAddUser = this.helpfulFunctions.newElem('span');
+        
+        /*Set similar class for elements*/
+        this.helpfulFunctions.setSimilarClassForManyTargets([
+            linkForContact,
+            linkForKeypad,
+            linkForEditContact,
+            linkForUser,
+            linkForAddUser
+        ] ,'tab');
+        
+        this.helpfulFunctions.setSimilarClassForManyTargets([
+            tabContentForContact,
+            tabContentForKeypad,
+            tabContentForEditContact,
+            tabContentForUser,
+            tabContentForAddUser
+        ] ,'tab-text');
+        
+        /*Set similar attribute aria-hidden for icons*/
+        this.helpfulFunctions.setAnySimilarAttributeForManyTargets([
+            iconForContact,
+            iconForKeypad,
+            iconForEditContact,
+            iconForUser,
+            iconForAddUser
+        ], 'aria-hidden', true);
+        
+        /*Set unique class for icons*/
+        this.helpfulFunctions.setClass(iconForContact, 'glyphicon glyphicon-search');
+        this.helpfulFunctions.setClass(iconForKeypad, 'glyphicon glyphicon-th');
+        this.helpfulFunctions.setClass(iconForEditContact, 'glyphicon glyphicon-pencil');
+        this.helpfulFunctions.setClass(iconForUser, 'glyphicon glyphicon-user');
+        this.helpfulFunctions.setClass(iconForAddUser, 'glyphicon glyphicon-plus');
+
+        /*Set textContent for tabContent*/
+        this.helpfulFunctions.setTextContent(tabContentForContact, 'Contacts');
+        this.helpfulFunctions.setTextContent(tabContentForKeypad, 'Keypad');
+        this.helpfulFunctions.setTextContent(tabContentForEditContact, 'Edit contact');
+        this.helpfulFunctions.setTextContent(tabContentForUser, 'User');
+        this.helpfulFunctions.setTextContent(tabContentForAddUser, 'Add user');
+        
+        /*Append many children for many parents*/
+        this.helpfulFunctions.appendManyChildrenToManyParents([
+            [
+                linkForContact,
+                [
+                    iconForContact,
+                    tabContentForContact
+                ]
+            ],
+            [
+                linkForKeypad,
+                [
+                    iconForKeypad,
+                    tabContentForKeypad
+                ]
+            ],
+            [
+                linkForEditContact,
+                [
+                    iconForEditContact,
+                    tabContentForEditContact
+                ]
+            ],
+            [
+                linkForUser,
+                [
+                    iconForUser,
+                    tabContentForUser
+                ]
+            ],
+            [
+                linkForAddUser,
+                [
+                    iconForAddUser,
+                    tabContentForAddUser
+                ]
+            ],
+            [
+                nav,
+                [
+                    linkForContact,
+                    linkForKeypad,
+                    linkForEditContact,
+                    linkForUser,
+                    linkForAddUser
+                ]
+            ]
+        ]);
         
         return nav;
-    },
+    };
     
     createFooter() {
-        this.footer = this.newElem('footer');
-        const container = this.newElem('div');
+        this.footer = this.helpfulFunctions.newElem('footer');
+        const container = this.helpfulFunctions.newElem('div');
         
-        this.setClass(this.footer, 'footer');
-        this.setClass(container, 'container bottom-radius');
+        this.helpfulFunctions.setClass(this.footer, 'footer');
+        this.helpfulFunctions.setClass(container, 'container bottom-radius');
         
         container.appendChild(this.fillFooter());
         this.footer.appendChild(container);
-    },
+        document.body.appendChild(this.footer);
+    };
     
     render() {
         this.createHeader();
         this.createMainContent();
         this.createFooter();
-        
-        document.body.appendChild(this.header);
-        document.body.appendChild(this.main);
-        document.body.appendChild(this.footer);
-    }
-}
+    }  
+};
 
-contactPage.render();
+const test = new ContactPage();
+test.render();
