@@ -1,3 +1,7 @@
+phone-book/node_modules
+phone-book/img
+phone-book/package-lock.json
+
 # Logs
 logs
 *.log
@@ -62,3 +66,4 @@ typings/
 
 # IDE
 .idea
+
