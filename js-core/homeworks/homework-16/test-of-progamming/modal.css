@@ -1,0 +1,40 @@
+.modal.open{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    padding: 10vh 0;
+}
+
+.modal .container{
+    background-color: white;
+    border-radius: .25rem;
+    width: 50vw;
+    padding: 2rem;
+}
+
+.modal .close-button{
+    font-size: 300%;
+    color: white;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    position: absolute;
+    top: .3rem;
+    right: 0.5rem;
+}
+
+.modal-title{
+    margin-bottom: 20px;
+}
