@@ -1,0 +1,91 @@
+*{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.contact-block{
+    margin: 40px auto;
+    width: 600px;
+    min-height: 600px;
+    border: 3px solid black;
+    border-radius: 2rem;
+}
+
+#search{
+    border-radius: 3rem;
+    width: 500px;
+    min-width: 200px;
+}
+
+.search-form{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    border-bottom: 3px solid black;
+}
+
+.user{
+    cursor: pointer;
+}
+
+.contact-list{
+    max-height: 470px;
+    overflow: hidden;
+    overflow-y: auto;
+    border-bottom: 3px solid black;
+}
+
+.navigation-panel{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    padding: 10px 0;
+    justify-content: space-around;
+}
+
+.navigation-button{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    transition: .3s ease 0s;
+}
+
+.icon{
+    color: black;
+    font-size: 24px;
+    transition: .3s ease 0s;
+}
+
+.active{
+    border-color: gray;
+    color: gray;
+    cursor: default;
+}
+
+.navigation-button:hover{
+    border-color: gray;
+}
+
+.navigation-button:hover > .icon{
+    color: gray;
+}
+
+.contact-list-titles{
+    cursor: pointer;
+}
