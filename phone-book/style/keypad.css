@@ -1,0 +1,243 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.number-field{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+#phone-number{
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 3rem;
+    min-width: 200px;
+    width: 420px;
+    height: 35px;
+    padding: 0 10px;
+}
+
+.keypad-header-wraper{
+    margin: 10px 20px;
+}
+
+.for-sort{
+    cursor: pointer;
+}
+
+.keypad-block{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 470px;
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+}
+
+.number-btn{
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s ease 0s;
+    margin: 10px 40px;
+    background-color: transparent;
+}
+
+.number-btn:hover{
+    background-color: lightgray;
+}
+
+.call:hover{
+    background-color: lawngreen;
+    opacity: 0.8;
+}
+
+.delete-number{
+    margin-left: 10px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 0.2rem;
+    height: 32px;
+    width: 45px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease 0s;
+}
+
+.delete-number:hover{
+    background-color: firebrick;
+    color: white;
+    opacity: 0.8;
+}
+
+#error-block{
+    font-size: 12px;
+    color: firebrick;
+}
+
+/*PNONE MODE*/
+
+@keyframes load-animation{
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-10px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.call-mode{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    opacity: 0.9;
+}
+
+.call-target{
+    color: white;
+    border-bottom: 2px solid white;
+    margin-bottom: 20px;
+}
+
+.phone-code{
+    color: white;
+    margin-left: 10px;
+}
+
+.load-point{
+    font-size: 12px;
+    color: white;
+    margin: 10px;
+}
+
+#load-point-1{
+    animation-name: load-animation;
+    animation-duration: 1.6s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-delay: 0s;
+}
+
+#load-point-2{
+    animation-name: load-animation;
+    animation-duration: 1.6s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-delay: .5s;
+}
+
+#load-point-3{
+    animation-name: load-animation;
+    animation-duration: 1.6s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+}
+
+#load-point-4{
+    animation-name: load-animation;
+    animation-duration: 1.6s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-delay: 1.5s;
+}
+
+#load-point-5{
+    animation-name: load-animation;
+    animation-duration: 1.6s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-delay: 2s;
+}
+
+.call-mode-keypad-block{
+    margin-top: 50px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.call-mode-btn{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 120%;
+    cursor: pointer;
+    transition: .2s ease 0s;
+    background-color: transparent;
+}
+
+.wraper-for-call-mode-btn{
+    text-align: center;
+    margin: 10px 40px;
+}
+
+.call-btn-description{
+    color: white;
+    font-size: 10px;
+}
+
+.call-mode-btn:hover{
+    background-color: white;
+    color: black;
+}
+
+.call-off:hover{
+    border-color: red;
+    background-color: red;
+    color: white;
+}
+
+.call-mode-btn-active{
+    background-color: white;
+    color: black;
+}
