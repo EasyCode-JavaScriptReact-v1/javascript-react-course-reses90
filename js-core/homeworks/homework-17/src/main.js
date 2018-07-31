@@ -50,8 +50,9 @@ console.log(solution([12, 12, 12])); // [5, 4]
  * */
 
 class Carousel {
-    constructor(quantitySlides) {
+    constructor(quantitySlides, infinityBoolean) {
         this.quantityOfSlides = quantitySlides;
+        this.infinity = infinityBoolean || false;
     }
 
     render() {
@@ -132,6 +133,10 @@ class Carousel {
             }
         }
 
+        if(this.infinity === true) {
+            setInterval(next, 1000);
+        }
+
         const prev = () => {
             for(let i = 0; i < items.length; i++) {
                 const item = items[i];
@@ -175,7 +180,7 @@ class Carousel {
     }
 }
 
-const slider = new Carousel(10);
+const slider = new Carousel(10, true);
 slider.render();
 slider.applyListeners();
 /*создайте новый instance Carouse при вызове initialize*/
