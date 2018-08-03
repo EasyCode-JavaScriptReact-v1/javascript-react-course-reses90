@@ -15,6 +15,7 @@ input::-webkit-inner-spin-button {
 
 #phone-number{
     display: flex;
+    justify-content: space-between;
     border: 1px solid gray;
     border-radius: 3rem;
     min-width: 200px;
@@ -108,6 +109,11 @@ input::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     font-size: 120%;
+}
+
+#operator{
+    display: flex;
+    align-items: center;
 }
 
 /*PNONE MODE*/
@@ -228,6 +234,10 @@ input::-webkit-inner-spin-button {
 .wraper-for-call-mode-btn{
     text-align: center;
     margin: 10px 40px;
+}
+
+.wraper-for-call-mode-buttons{
+    margin-top: 30px;
 }
 
 .call-btn-description{
