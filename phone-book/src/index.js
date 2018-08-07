@@ -6,7 +6,8 @@ class App {
         this.store = this.createStore();
         this.pages = {
            'contacts': new ContactPage(this.store),
-           'keypad': new KeypadPage(this.store, this.applyListenerForNavigation),
+           'keypad': new KeypadPage(this.store),
+           'footer': new FooterNavigationBar()
         }
         this.pages.contacts.setStateContact();
         this.render();
@@ -35,12 +36,14 @@ class App {
         };
 
         if(action.type === 'MOVE_TO_KEYPAD_PAGE') {
+            this.pages.keypad.setStateKeypad();
             switchBetweenPages();
             this.pages.keypad.applyListenerForKeypadPage();
             return;
         }
 
         if(action.type === 'MOVE_TO_CONTACT_PAGE') {
+            this.pages.contacts.setStateContact();
             switchBetweenPages();
             this.pages.contacts.applyListenerForContactPage();
             return;
@@ -50,41 +53,17 @@ class App {
 
     render() {
         const currentState = this.store.getState();
+        const FOOTER = this.pages.footer.render();
 
         const appTemplate = /*html*/`
             <div id="main-wraper" class="app-block">
                 ${currentState.activePage}
-                ${this.footerNavigationBar()}
+                ${FOOTER}
             </div>
         `;
+
         const mountMode = document.getElementById('mountMode');
         mountMode.innerHTML = appTemplate;
-    }
-
-    footerNavigationBar() {
-        return /*html*/`
-            <footer class="container">
-                <div class="row navigation-panel" id="wraper-for-footer">
-                    <div class="col-4 d-flex justify-content-center">
-                        <button id="to-contact-page" class="navigation-button">
-                            <svg class="svg-inline--fa fa-address-book fa-w-14 icon" aria-hidden="true" data-prefix="far" data-icon="address-book" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-68 304H48V48h320v416zM208 256c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm-89.6 128h179.2c12.4 0 22.4-8.6 22.4-19.2v-19.2c0-31.8-30.1-57.6-67.2-57.6-10.8 0-18.7 8-44.8 8-26.9 0-33.4-8-44.8-8-37.1 0-67.2 25.8-67.2 57.6v19.2c0 10.6 10 19.2 22.4 19.2z"></path></svg><!-- <span class="far fa-address-book icon"></span> -->
-                        </button>
-                    </div>
-
-                    <div class="col-4 d-flex justify-content-center">
-                        <button id="to-keypad-page" class="navigation-button">
-                            <svg class="svg-inline--fa fa-tty fa-w-16 icon" aria-hidden="true" data-prefix="fas" data-icon="tty" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M5.37 103.822c138.532-138.532 362.936-138.326 501.262 0 6.078 6.078 7.074 15.496 2.583 22.681l-43.214 69.138a18.332 18.332 0 0 1-22.356 7.305l-86.422-34.569a18.335 18.335 0 0 1-11.434-18.846L351.741 90c-62.145-22.454-130.636-21.986-191.483 0l5.953 59.532a18.331 18.331 0 0 1-11.434 18.846l-86.423 34.568a18.334 18.334 0 0 1-22.356-7.305L2.787 126.502a18.333 18.333 0 0 1 2.583-22.68zM96 308v-40c0-6.627-5.373-12-12-12H44c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H92c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zM96 500v-40c0-6.627-5.373-12-12-12H44c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H140c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"></path></svg><!-- <span class="fas fa-tty icon"></span> -->
-                        </button>
-                    </div>
-
-                    <div class="col-4 d-flex justify-content-center">
-                        <button id="to-addUser-page" class="navigation-button">
-                            <svg class="svg-inline--fa fa-user-plus fa-w-20 icon" aria-hidden="true" data-prefix="fas" data-icon="user-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M624 208h-64v-64c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v64h-64c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h64v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h64c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path></svg><!-- <span class="fas fa-user-plus icon"></span> -->
-                        </button>
-                    </div>
-                </div>
-            </footer>
-        `;
     }
 
     applyListenerForNavigation() {
@@ -134,6 +113,58 @@ class App {
     }
 }
 
+/* ================== FOOTER START================== */
+
+class FooterNavigationBar {
+    constructor() {
+        this.icons = {
+            contactIcon: {
+                id: 'to-contact-page',
+                class: 'far fa-address-book',
+            },
+            keypadIcon: {
+                id: 'to-keypad-page',
+                class: 'fas fa-tty',
+            },
+            addUserIcon: {
+                id: 'to-addUser-page',
+                class: 'fas fa-user-plus',
+            }
+        }
+    }
+
+    render() {
+        const navigationBar = /*html*/`
+            <footer class="container">
+                <div class="row navigation-panel" id="wraper-for-footer">
+                    ${this.createIcon(this.icons.contactIcon)}
+                    ${this.createIcon(this.icons.keypadIcon)}
+                    ${this.createIcon(this.icons.addUserIcon)}
+                </div>
+            </footer>
+        `;
+
+        return navigationBar;
+    }
+
+    createIcon(iconPattern) {
+        const ID = iconPattern.id;
+        const CLASS = iconPattern.class;
+
+        const icon = /*html*/`
+            <div class="col-4 d-flex justify-content-center">
+                <button id="${ID}" class="navigation-button">
+                    <span class="${CLASS} icon"></span>
+                </button>
+            </div>
+        `;
+
+        return icon;
+    }
+
+}
+
+/* ================== FOOTER END================== */
 /* ================== CONTACT START================== */
 
 class ContactPage {
@@ -234,6 +265,10 @@ class ContactPage {
                 return;
             }
         })
+
+        /* SORT USERS BY INPUTED LETTERS OF NAME */
+
+        
     }
 
     sortUsersByValue(key, users) {
@@ -264,6 +299,21 @@ class KeypadPage {
     }
 
     render() {
+        const buttons = {
+            ONE: '1',
+            TWO: '2',
+            THREE: '3',
+            FOUR: '4',
+            FIVE: '5',
+            SIX: '6',
+            SEVEN: '7',
+            EIGHT: '8',
+            NINE: '9',
+            ZERO: '0',
+            ASTERISK: '*',
+            HASH: '#'
+        }
+
         return /*html*/`
             <div id="keypad-wraper">
 
@@ -283,24 +333,24 @@ class KeypadPage {
                     
                     <div id="wraper-for-buttons">
                         <div class="row">
-                            <div class="number-btn">1</div>
-                            <div class="number-btn">2</div>
-                            <div class="number-btn">3</div>
+                            ${this.createButton(buttons.ONE)}
+                            ${this.createButton(buttons.TWO)}
+                            ${this.createButton(buttons.THREE)}
                         </div>
                         <div class="row">
-                            <div class="number-btn">4</div>
-                            <div class="number-btn">5</div>
-                            <div class="number-btn">6</div>
+                            ${this.createButton(buttons.FOUR)}
+                            ${this.createButton(buttons.FIVE)}
+                            ${this.createButton(buttons.SIX)}
                         </div>
                         <div class="row">
-                            <div class="number-btn">7</div>
-                            <div class="number-btn">8</div>
-                            <div class="number-btn">9</div>
+                            ${this.createButton(buttons.SEVEN)}
+                            ${this.createButton(buttons.EIGHT)}
+                            ${this.createButton(buttons.NINE)}
                         </div>
                         <div class="row">
-                            <div class="number-btn">*</div>
-                            <div class="number-btn">0</div>
-                            <div class="number-btn">#</div>
+                            ${this.createButton(buttons.ASTERISK)}
+                            ${this.createButton(buttons.ZERO)}
+                            ${this.createButton(buttons.HASH)}
                         </div>
                     </div>
 
@@ -315,12 +365,56 @@ class KeypadPage {
         `;
     }
 
+    createButton(value) {
+        const button = /*html*/`
+            <div class="number-btn">${value}</div>
+        `;
+
+        return button;
+    }
+
     applyListenerForKeypadPage() {
 
         /* ADD NUMBER */
         const keypadButtons = document.getElementById('wraper-for-buttons');
         const fieldForNumber = document.getElementById('number');
         const fieldForOperator = document.getElementById('operator');
+
+        const toFormateNumberFieldForAdding = () => {
+            const numbersFromField = fieldForNumber.textContent.replace(/\D/gm, '');
+            let finalConstructions = null;
+
+            if(numbersFromField.length === 1) {
+                finalConstructions = numbersFromField.replace(/(.{1})/g, '($1');
+                fieldForNumber.textContent = finalConstructions;
+                return;
+            }
+
+            if(numbersFromField.length === 3) {
+                finalConstructions = numbersFromField.replace(/(.{3})/g, '($1)');
+                fieldForNumber.textContent = finalConstructions;
+                return;
+            }
+
+            if(numbersFromField.length === 4) {
+                finalConstructions = numbersFromField.replace(/(.{3})(.{1})/g, '($1) $2');
+                fieldForNumber.textContent = finalConstructions;
+                return;
+            }
+
+            if(numbersFromField.length === 7) {
+                finalConstructions = numbersFromField.replace(/(.{3})(.{3})(.{1})/g, '($1) $2-$3');
+                fieldForNumber.textContent = finalConstructions;
+                return;
+            }
+
+            if(numbersFromField.length === 9) {
+                finalConstructions = numbersFromField.replace(/(.{3})(.{3})(.{2})(.{1})/g, '($1) $2-$3-$4');
+                fieldForNumber.textContent = finalConstructions;
+                return;
+            }
+
+        };
 
         keypadButtons.addEventListener('click', (e) => {
             const TARGET_CLASS_NAME = e.target.className;
@@ -329,12 +423,15 @@ class KeypadPage {
                 const BUTTON_VALUE = e.target.textContent;
                 fieldForNumber.textContent += BUTTON_VALUE;
 
-                const LENGTH_OF_NUMBERS = fieldForNumber.textContent.length;
+                const MATCH_NUMBERS = fieldForNumber.textContent.match(/\d+/gm);
+                const FIRST_THREE_NUMBERS = MATCH_NUMBERS[0];
+                const LENGTH_OF_FIRST_NUMBERS = FIRST_THREE_NUMBERS.length;
 
-                if(LENGTH_OF_NUMBERS === 3) {
-                    fieldForOperator.textContent = this.indentifyMobileOperator(fieldForNumber.textContent)
+                if(LENGTH_OF_FIRST_NUMBERS === 3) {
+                    fieldForOperator.textContent = this.indentifyMobileOperator(FIRST_THREE_NUMBERS)
                 }
 
+                toFormateNumberFieldForAdding();
             }
         });
 
@@ -386,6 +483,109 @@ class KeypadPage {
             mainWraper.innerHTML = this.callMode.render(NUMBER_FOR_CALL_MODE, OPERATOR_FOR_CALL_MODE);
             this.callMode.applyListenerForCallMode();
         })
+
+        /* WRITING NUMBER BY KEYBOARD */
+
+        const keyCodes = {
+            ONE: 49,
+            TWO: 50,
+            THREE: 51,
+            FOUR: 52,
+            FIVE: 53,
+            SIX: 54,
+            SEVEN: 55,
+            EIGHT: 56,
+            NINE: 57,
+            ZERO: 48,
+            ASTERISK: 42,
+            HASH: 35,
+            DELETE: 8
+        };
+
+        const SINGLE_TAPS = (e) => {
+
+            if(e.keyCode === keyCodes.ONE) {
+                const ONE = '1';
+                fieldForNumber.textContent += ONE;
+            }
+            if(e.keyCode === keyCodes.TWO) {
+                const TWO = '2';
+                fieldForNumber.textContent += TWO;
+            }
+            if(e.keyCode === keyCodes.THREE) {
+                const THREE = '3';
+                fieldForNumber.textContent += THREE;
+            }
+            if(e.keyCode === keyCodes.FOUR) {
+                const FOUR = '4';
+                fieldForNumber.textContent += FOUR;
+            }
+            if(e.keyCode === keyCodes.FIVE) {
+                const FIVE = '5';
+                fieldForNumber.textContent += FIVE;
+            }
+            if(e.keyCode === keyCodes.SIX) {
+                const SIX = '6';
+                fieldForNumber.textContent += SIX;
+            }
+            if(e.keyCode === keyCodes.SEVEN) {
+                const SEVEN = '7';
+                fieldForNumber.textContent += SEVEN;
+            }
+            if(e.keyCode === keyCodes.EIGHT) {
+                const EIGHT = '8';
+                fieldForNumber.textContent += EIGHT;
+            }
+            if(e.keyCode === keyCodes.NINE) {
+                const NINE = '9';
+                fieldForNumber.textContent += NINE;
+            }
+            if(e.keyCode === keyCodes.ZERO) {
+                const ZERO = '0';
+                fieldForNumber.textContent += ZERO;
+            }
+            if(e.keyCode === keyCodes.HASH) {
+                const HASH = '#';
+                fieldForNumber.textContent += HASH;
+            }
+            if(e.keyCode === keyCodes.ASTERISK) {
+                const ASTERISK = '*';
+                fieldForNumber.textContent += ASTERISK;
+            }
+
+            
+
+            /* IDENTIFICATION FUNCTIONAL */
+            const MATCH_NUMBERS = fieldForNumber.textContent.match(/\d+/gm);
+            const FIRST_THREE_NUMBERS = MATCH_NUMBERS[0];
+            const LENGTH_OF_FIRST_NUMBERS = FIRST_THREE_NUMBERS.length;
+
+            if(LENGTH_OF_FIRST_NUMBERS === 3) {
+                fieldForOperator.textContent = this.indentifyMobileOperator(FIRST_THREE_NUMBERS)
+            }
+
+            toFormateNumberFieldForAdding();
+
+        };
+
+        const DELETE_FUNCTIONAL = (e) => {
+            const LENGTH_OF_NUMBERS = fieldForNumber.textContent.length;
+
+            if(e.keyCode === keyCodes.DELETE) {
+                const LENGTH_OF_NUMBERS_FOR_SLICE = fieldForNumber.textContent.length - 1;
+                const strWithDeletedOneNumber = fieldForNumber.textContent.slice(0, LENGTH_OF_NUMBERS_FOR_SLICE)
+                fieldForNumber.textContent = strWithDeletedOneNumber;
+
+                if(LENGTH_OF_NUMBERS <= 3) {
+                    fieldForOperator.textContent = '';
+                }
+                return;
+            }
+        }
+
+        window.addEventListener('keypress', SINGLE_TAPS);
+        window.addEventListener('keydown', DELETE_FUNCTIONAL);
+        
     }
 
     indentifyMobileOperator(firstThreeNumbers) {
