@@ -81,30 +81,43 @@ class ContactPage {
                 email: 'Email'
             };
 
-            const ListOfContacts = document.getElementById('list-of-contacts');
+            const listOfContacts = document.getElementById('list-of-contacts');
 
             if(TH_ELEM_CONTAINS === PREDICT_TEXT_CONTENT.firstName) {
-                const sortedListByFirsName = this.sortUsersByValue('firstName', users);
-                ListOfContacts.innerHTML = this.contactListComponent(sortedListByFirsName);
+                const firstName = 0;
+                const sortedListByFirsName = this.mergeSort(users, firstName);
+                listOfContacts.innerHTML = this.contactListComponent(sortedListByFirsName);
                 return;
             }
 
             if(TH_ELEM_CONTAINS === PREDICT_TEXT_CONTENT.lastName) {
-                const sortedListByLastName = this.sortUsersByValue('lastName', users);
-                ListOfContacts.innerHTML = this.contactListComponent(sortedListByLastName);
+                const lastName = 1;
+                const sortedListByLastName = this.mergeSort(users, lastName);
+                listOfContacts.innerHTML = this.contactListComponent(sortedListByLastName);
                 return;
             }
 
             if(TH_ELEM_CONTAINS === PREDICT_TEXT_CONTENT.email) {
                 const sortedListByEmail = this.sortUsersByValue('email', users);
-                ListOfContacts.innerHTML = this.contactListComponent(sortedListByEmail);
+                listOfContacts.innerHTML = this.contactListComponent(sortedListByEmail);
                 return;
             }
         })
 
         /* SORT USERS BY INPUTED LETTERS OF NAME */
+        const contactSearchField = document.querySelector('#search');
 
-        
+        contactSearchField.addEventListener('input', () => {
+            const VALUE = contactSearchField.value;
+            const filteredUsers = this.filterUsersByInputValueByName(VALUE);
+            const listOfContacts = document.getElementById('list-of-contacts');
+
+            filteredUsers.length === 0 
+                ? listOfContacts.innerHTML = /*html*/`<p>No such users</p>`
+                : listOfContacts.innerHTML = this.contactListComponent(filteredUsers);
+
+            
+        })
     }
 
     sortUsersByValue(key, users) {
@@ -114,6 +127,52 @@ class ContactPage {
         }
     
         return [...users].sort(sortFunction);
+    }
+
+    mergeSort(arr, index) {
+
+        const len = arr.length;
+        if(len < 2) return arr;
+        const mid = Math.floor(len / 2),
+        left = arr.slice(0, mid),
+        right =arr.slice(mid);
+
+        return this.merge(this.mergeSort(left, index), this.mergeSort(right, index), index);
+    }
+
+    merge(left, right, index) {
+        let result = [],
+        lLen = left.length,
+        rLen = right.length,
+        l = 0,
+        r = 0;
+        while(l < lLen && r < rLen){
+            const leftWord = left[l].fullName.split(' ')[index];
+            const rightWord = right[r].fullName.split(' ')[index];
+            if(leftWord < rightWord){
+                result.push(left[l++]);
+            }
+            else{
+                result.push(right[r++]);
+            }
+        }  
+    
+        return result.concat(left.slice(l)).concat(right.slice(r));
+    }
+
+    filterUsersByInputValueByName(inputValue) {
+        return users.reduce((newUsers, user) => {
+            const firstName = user.fullName.split(' ')[0].toLowerCase();
+
+            const comparedPartOfName = firstName.slice(0, inputValue.length);
+
+            if(inputValue.toLowerCase() === comparedPartOfName) {
+                newUsers.push(user);
+            }
+
+            return newUsers;
+        }, []);
+
     }
 }
 

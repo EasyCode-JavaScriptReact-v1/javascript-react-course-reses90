@@ -1,9 +1,7 @@
-import {users} from './components/users';
-import {MOBILE_OPERATORS_IDENTIFICATORS} from './components/mobile-operators-identifiers';
 
 import {ContactPage} from './contact/contact';
 import {KeypadPage} from './keypad/keypad';
-// import {} from './add-user/add-user';
+import {AddUserPage} from './add-user/add-user';
 
 class App {
     constructor() {
@@ -11,6 +9,7 @@ class App {
         this.pages = {
            'contacts': new ContactPage(this.store),
            'keypad': new KeypadPage(this.store),
+           'addUser': new AddUserPage(this.store),
            'footer': new FooterNavigationBar()
         }
         this.pages.contacts.setStateContact();
@@ -53,6 +52,13 @@ class App {
             return;
         }
 
+        if(action.type === 'MOVE_TO_ADD_USER_PAGE') {
+            this.pages.addUser.setStateContact();
+            switchBetweenPages();
+            this.pages.addUser.applyListenersForAddUserPage();
+            return;
+        }
+
     }
 
     render() {
@@ -78,6 +84,10 @@ class App {
 
         const _MOVE_TO_CONTACT_PAGE = {
             type: 'MOVE_TO_CONTACT_PAGE'
+        }
+
+        const _MOVE_TO_ADD_USER_PAGE = {
+            type: 'MOVE_TO_ADD_USER_PAGE'
         }
 
         const wraperForFooter = document.getElementById('wraper-for-footer');
@@ -110,6 +120,19 @@ class App {
                 if(currentState.stateName !== 'CONTACT') {
                     this.pages.contacts.setStateContact();
                     return this.reducer(_MOVE_TO_CONTACT_PAGE);
+                }
+                return;
+            }
+
+            if(
+                BUTTON_ID === 'to-addUser-page' 
+                || BUTTON_ID_FROM_SVG === 'to-addUser-page' 
+                || BUTTON_ID_FROM_PATH === 'to-addUser-page'
+            ) {
+
+                if(currentState.stateName !== 'ADD USER') {
+                    this.pages.addUser.setStateContact();
+                    return this.reducer(_MOVE_TO_ADD_USER_PAGE);
                 }
                 return;
             }

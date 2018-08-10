@@ -5,6 +5,12 @@
     margin: 0;
 }
 
+#main-wraper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .app-block{
     margin: 40px auto;
     width: 600px;
@@ -38,7 +44,10 @@
     max-height: 470px;
     overflow: hidden;
     overflow-y: auto;
-    border-bottom: 3px solid black;
+}
+
+footer{
+    border-top: 3px solid black;
 }
 
 .navigation-panel{
