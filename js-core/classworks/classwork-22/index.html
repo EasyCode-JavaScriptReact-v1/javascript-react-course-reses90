@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo app</title>
+</head>
+<body>
+
+    <div id="app">
+
+        <div class="title">
+            <h1>TO DO</h1>
+        </div>
+        
+        <div class="block-list">
+            <ul class="list">loading...</ul>
+        </div>
+
+        <div class="controls">
+            <input id="input-task" type="text" placeholder="Your task" required>
+            <button id="add-btn">Add</button>
+            <br>
+            <input id="remove-field" type="text" placeholder="Item for remove" required>
+            <button id="remove-btn">Remove</button>
+            <br>
+            <input id="update-old-item" type="text" placeholder="Old item" required>
+            <input id="update-new-item" type="text" placeholder="New Item" required>
+            <button id="update-btn">Update</button>
+        </div>
+
+    </div>
+
+
+    <script src="src/model.js"></script>
+    <script src="src/controller.js"></script>
+    <script src="src/view.js"></script>
+    <script src="src/app.js"></script>
+</body>
+</html>
