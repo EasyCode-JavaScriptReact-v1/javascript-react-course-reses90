@@ -11,7 +11,7 @@ const solution = (strA, strB) => {
 
     let resultOfSum;
 
-    if(reversedStrA.lenght > reversedStrB.lenght) {
+    if(strA.length > strB.length) {
         resultOfSum = sum(reversedStrA, reversedStrB);
     } else {
         resultOfSum = sum(reversedStrB, reversedStrA);
@@ -24,15 +24,10 @@ function sum(biggestStr, smallestStr) {
     let remainder = 0;
 
     return biggestStr.reduce((output, num, i) => {
-        const lengthOfSmallestStr = smallestStr.length + 1;
         
         const numA = parseInt(num, 10) || 0;
         const numB = parseInt(smallestStr[i], 10) || 0;
         const lastIndex = biggestStr.length - 1;
-
-        if(i > lengthOfSmallestStr) {
-            remainder = 0;
-        }
         
         const sum = (numA + numB + remainder).toString();
 
@@ -53,7 +48,8 @@ function sum(biggestStr, smallestStr) {
         return output;
     }, []);
 }
-
+console.log(solution('1234', '9'))
+console.log(solution('99999', '1'));
 console.log(solution('9', '08'));
 console.log(solution('2987654', '45678'));
 console.log(solution('123456789', '987654322'));
