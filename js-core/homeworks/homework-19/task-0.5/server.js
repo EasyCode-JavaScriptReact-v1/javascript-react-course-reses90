@@ -20,6 +20,6 @@ server.listen(port, (err) => {
     if (err) {
         return console.log('something bad happened', err)
     }
-    console.log(`server is listening on ${port}`)
+    console.log(`http://localhost:3000/`)
 });
 
