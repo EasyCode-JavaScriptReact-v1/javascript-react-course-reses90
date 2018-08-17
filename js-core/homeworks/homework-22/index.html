@@ -3,31 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo app</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Nixie+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
 
     <div id="app">
 
         <div class="title">
-            <h1>TO DO</h1>
+            <h1>To Do</h1>
         </div>
         
-        <div class="block-list">
-            <ul class="list">loading...</ul>
-        </div>
+        <div class="task-list">
 
-        <div class="controls">
-            <input id="input-task" type="text" placeholder="Your task" required>
-            <button id="add-btn">Add</button>
-            <br>
-            <input id="remove-field" type="text" placeholder="Item for remove" required>
-            <button id="remove-btn">Remove</button>
-            <br>
-            <input id="update-old-item" type="text" placeholder="Old item" required>
-            <input id="update-new-item" type="text" placeholder="New Item" required>
-            <button id="update-btn">Update</button>
+            <div class="input-for-tasks">
+                <input id="add-task" type="text" placeholder="Your task">
+            </div>
+            
+            <div id="tasks-block"></div>
+            
         </div>
-
+        
     </div>
 
     <script src="src/task0.js"></script>

@@ -1,11 +1,7 @@
 (() => {
-    const initializeState = [
-        'learn JS',
-        'learn MVC',
-        'read book OOP'
-    ];
-
-    const model = new Model(initializeState);
-    const view = new View(initializeState);
+    
+    const model = new Model();
+    const view = new View();
     const controller = new Controller(model, view);
+
 })()

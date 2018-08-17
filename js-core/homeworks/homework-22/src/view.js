@@ -1,24 +1,42 @@
 class View{
-    constructor(initialState) {
+    constructor() {
         this.elements = {
-            addButton: document.querySelector('#add-btn'),
-            listItems: document.querySelector('.list'),
-            taskField: document.querySelector('#input-task'),
-            removeField: document.querySelector('#remove-field'),
-            removeBtn: document.querySelector('#remove-btn'),
-            updateOld: document.querySelector('#update-old-item'),
-            updateNew: document.querySelector('#update-new-item'),
-            updateBtn: document.querySelector('#update-btn')
+            tasksBlock: document.querySelector('#tasks-block'),
+            inputTodo: document.querySelector('#add-task')
         };
 
-        this.render(initialState);
+        this.render();
     }
 
-    render(newData) {
-        const listItems = newData.reduce((colector, item) => {
-            return colector + `<li>${item}</li>`;
+    render() {
+        const tasksLenght = localStorage.length;
+        const tasks = Object.values({...localStorage});
+        const identificators = Object.keys({...localStorage});
+
+        if(tasksLenght === 0) {
+            this.elements.tasksBlock.innerHTML = ``;
+            return;
+        }
+
+        const tasksHtmlElements = tasks.reduce((collector, task, i) => {
+            const id = identificators[i];
+            const elem = /*html*/`
+                <div id="${id}" class="task">
+                    <div class="wraper-for-task">
+                        <input class="mark-done" type="checkbox">
+                        <span class="task-name">${task}</span>
+                    </div>
+                    
+                    <div class="wraper-for-btns">
+                        <span class="fas fa-edit"></span>
+                        <span class="fas fa-times"></span>
+                    </div>
+                </div>
+            `;
+
+            return collector + elem;
         }, '');
 
-        this.elements.listItems.innerHTML = listItems;
+        this.elements.tasksBlock.innerHTML = tasksHtmlElements;
     }
 }

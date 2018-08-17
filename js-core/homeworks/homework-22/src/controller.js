@@ -2,60 +2,71 @@ class Controller{
     constructor(model, view) {
         this.model = model;
         this.view = view;
+
         this.init();
     }
 
     init() {
-        this.addHandlerForTask();
-        this.addHandlerForRemove();
-        this.addHandlerForUpdate();
+        this.applyListenersForInput();
+        this.applyListenersForTaskBlock();
     }
 
-    addHandlerForTask() {
-        const input = this.view.elements.taskField;
-        const addButton = this.view.elements.addButton;
+    applyListenersForInput() {
+        const input = this.view.elements.inputTodo;
 
-        const handlerForAddButton = () => {
-            if(input.value.length < 3) {
-                alert('Your length of input is so short');
-            }
+        const handlerForInput = (e) => {
+            if(e.keyCode == 13) {
+                const valueLenght = input.value.length;
+                const VALUE = input.value;
 
-            this.model.addTodoItem(input.value);
-            this.view.render(this.model.data);
+                if(valueLenght < 3) {
+                    alert('So short task name, please text real task');
+                    return;
+                }
 
-            input.value = '';
+                input.value = '';
+                this.model.setTask(VALUE);
+                this.view.render();
+            }    
         }
 
-        addButton.addEventListener('click', handlerForAddButton);
+        input.addEventListener('keydown', handlerForInput);
     }
 
-    addHandlerForRemove() {
-        const input = this.view.elements.removeField;
-        const removeBtn = this.view.elements.removeBtn;
+    applyListenersForTaskBlock() {
+        const tasksBlock = this.view.elements.tasksBlock;
 
-        const handlerForRemoveButton = () => {
-            this.model.rempveItem(input.value);
-            this.view.render(this.model.data);
+        const handlerForTasksBlock = (e) => {
+            if(e.target.classList.contains('mark-done')) {
+                const value = e.target.nextElementSibling.textContent;
+                const span = e.target.nextElementSibling;
 
-            input.value = '';
-        };
+                e.target.checked === true 
+                    ? span.outerHTML = /*html*/`<strike class="task-name">${value}</strike>`
+                    : span.outerHTML = /*html*/`<span class="task-name">${value}</span>`
+            }
 
-        removeBtn.addEventListener('click', handlerForRemoveButton)
-    }
+            if(e.target.classList.contains('fa-edit')) {
+                const ID = e.target.parentElement.parentElement.id;
+                
+                const NEW_VALUE = prompt('New task name', '');
 
-    addHandlerForUpdate() {
-        const oldInput = this.view.elements.updateOld;
-        const newInput = this.view.elements.updateNew;
-        const updateBtn = this.view.elements.updateBtn;
+                if(NEW_VALUE.length < 3) {
+                    alert('So short task name, please text real task');
+                    return;
+                }
 
-        const handlerForUpdateButton = () => {
-            this.model.updateItem(oldInput.value, newInput.value);
-            this.view.render(this.model.data);
+                this.model.editTask(ID, NEW_VALUE);
+                this.view.render();
+            }
 
-            oldInput.value = '';
-            newInput.value = '';
-        };
-
-        updateBtn.addEventListener('click', handlerForUpdateButton)
+            if(e.target.classList.contains('fa-times')) {
+                const ID = e.target.parentElement.parentElement.id;
+                this.model.removeTask(ID);
+                this.view.render();
+            }
+        }
+        
+        tasksBlock.addEventListener('click', handlerForTasksBlock);
     }
 }
