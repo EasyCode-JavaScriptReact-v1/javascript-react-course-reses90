@@ -72,20 +72,20 @@ table.addEventListener('click', (e) => {
         cell.classList.toggle('active');
     }
 
-    if(e.target.tagName === 'TD' && e.target.parentElement.id ==='first') {
-        toggleFunc(0)
+    if(!e.target.tagName === 'TD') {
+        return; 
     }
-    if(e.target.tagName === 'TD' && e.target.parentElement.id ==='second') {
-        toggleFunc(1)
+
+    const hashMap = {
+        'first': 0,
+        'second': 1,
+        'third': 2,
+        'fourth': 3,
+        'fifth': 4
     }
-    if(e.target.tagName === 'TD' && e.target.parentElement.id ==='third') {
-        toggleFunc(2)
-    }
-    if(e.target.tagName === 'TD' && e.target.parentElement.id ==='fourth') {
-        toggleFunc(3)
-    }
-    if(e.target.tagName === 'TD' && e.target.parentElement.id ==='fifth') {
-        toggleFunc(4)
+
+    if(hashMap[e.target.parentElement.id] || !hashMap[e.target.parentElement.id]) {
+        toggleFunc(hashMap[e.target.parentElement.id])
     }
 })
 
