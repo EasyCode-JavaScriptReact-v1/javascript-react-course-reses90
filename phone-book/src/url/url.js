@@ -1,32 +1,36 @@
 class Url{
-    constructor() {
-        this.url = 'http://easycode-js.herokuapp.com/myba/users';
+    constructor(accountName) {
+        this.url = `https://easycode-js.herokuapp.com/${accountName}/users`;
     }
     
     getUsersFromServer() {
-       return (async () => {
-           const data = await fetch(this.url);
-           return this.users = await data.json();
-       })();
-    }
-
-    obtainUsers() {
-        this.getUsersFromServer();
-        return this.users;
+        return fetch(this.url)
     }
 
     postUser(user) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', this.url, true);    
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(user));
+        fetch(this.url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })    
+    }
+
+    editUser(infoToEdit,  id) {
+        fetch(this.url + '/' + id, {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(infoToEdit)
+        })    
     }
 
     deleteUserById(id) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('DELETE', `${this.url}/${id}`, true);    
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send();
+        fetch(this.url + '/' + id, {
+            method: 'DELETE'
+        })
     }
 }
 
