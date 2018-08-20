@@ -7,6 +7,7 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/build/'
     },
+    watch: true,
     module: {
         rules: [
           { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
