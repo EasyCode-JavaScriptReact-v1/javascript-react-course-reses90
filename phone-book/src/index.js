@@ -1,4 +1,4 @@
-
+import {AuthorizationPage} from './authorization-page/authorization-page';
 import {ContactPage} from './contact/contact';
 import {KeypadPage} from './keypad/keypad';
 import {AddUserPage} from './add-user/add-user';
@@ -6,16 +6,8 @@ import {AddUserPage} from './add-user/add-user';
 class App {
     constructor() {
         this.store = this.createStore();
-        this.pages = {
-           'contacts': new ContactPage(this.store),
-           'keypad': new KeypadPage(this.store),
-           'addUser': new AddUserPage(this.store),
-           'footer': new FooterNavigationBar()
-        }
-        this.pages.contacts.setStateContact();
-        this.render();
-        this.pages.contacts.applyListenerForContactPage();
-        this.applyListenerForNavigation();
+        this.authorizationPage = new AuthorizationPage();
+        this.renderAuthorizationPage();
     }
     
     createStore() {
@@ -27,7 +19,7 @@ class App {
             }, 
             setState(newState) { 
                 state = newState; 
-            } 
+            }
         }
     }
 
@@ -48,6 +40,7 @@ class App {
         if(action.type === 'MOVE_TO_CONTACT_PAGE') {
             this.pages.contacts.setStateContact();
             switchBetweenPages();
+            this.pages.contacts.renderUsers();
             this.pages.contacts.applyListenerForContactPage();
             return;
         }
@@ -59,6 +52,54 @@ class App {
             return;
         }
 
+    }
+
+    renderAuthorizationPage() {
+        const authorizationPage = this.authorizationPage.render();
+        const mountMode = document.getElementById('mountMode');
+        mountMode.innerHTML = authorizationPage;
+        this.applyListenerForAuthorizationPage();
+    }
+
+    applyListenerForAuthorizationPage() {
+        const input = document.querySelector('.au-input');
+        const logInButton = document.getElementById('log-in');
+        const switchBetweenPages = () => {
+                this.accountName = input.value;
+
+                this.pages = {
+                    'contacts': new ContactPage(this.store, this.accountName),
+                    'keypad': new KeypadPage(this.store, this.accountName),
+                    'addUser': new AddUserPage(this.store, this.accountName),
+                    'footer': new FooterNavigationBar()
+                }
+                
+                this.pages.contacts.setStateContact();
+                this.render();
+                this.pages.contacts.applyListenerForContactPage();
+                this.applyListenerForNavigation();
+        }
+
+        const handlerForLogInBtn = () => {
+            if(input.value.length > 3) {
+                switchBetweenPages();
+            } else {
+                alert('So short login');
+            }   
+        };
+
+        const handlerForLogInInput = (e) => {
+            if(e.keyCode === 13) {
+                if(input.value.length > 3) {
+                    switchBetweenPages();
+                } else {
+                    alert('So short login');
+                }  
+            }     
+        };
+
+        logInButton.addEventListener('click', handlerForLogInBtn);
+        input.addEventListener('keydown', handlerForLogInInput);
     }
 
     render() {
@@ -74,6 +115,8 @@ class App {
 
         const mountMode = document.getElementById('mountMode');
         mountMode.innerHTML = appTemplate;
+
+        this.pages.contacts.renderUsers();
     }
 
     applyListenerForNavigation() {
