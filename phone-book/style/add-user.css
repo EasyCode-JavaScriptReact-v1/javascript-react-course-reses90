@@ -6,3 +6,21 @@
 .add-user-block{
     padding: 10px 0;
 }
+
+.correct{
+    background-color: rgba(10, 194, 56, 0.3) !important;
+}
+
+.wrong{
+    background-color: rgba(194, 10, 10, 0.3) !important;
+}
+
+.required{
+    color: brown;
+}
+
+.respond-after-delete{
+    color: brown;
+    text-align: center;
+    margin-top: 20px;
+}
