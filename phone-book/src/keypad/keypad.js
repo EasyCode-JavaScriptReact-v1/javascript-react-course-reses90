@@ -3,7 +3,7 @@ import {MOBILE_OPERATORS_IDENTIFICATORS} from '../components/mobile-operators-id
 /* ================== KEYPAD START================== */
 
 class KeypadPage {
-    constructor(store) {
+    constructor(store, accountName) {
         this.setStateKeypad = () => {
             const {setState} = store;
             const initializeState = {
