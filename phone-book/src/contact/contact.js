@@ -1,9 +1,10 @@
-import {users} from '../components/users';
+import {Url} from '../url/url';
+import {UserPage} from '../user-page/user-page';
 
 /* ================== CONTACT START================== */
 
 class ContactPage {
-    constructor(store) {
+    constructor(store, accountName) {
         this.setStateContact = () => {
             const {setState} = store;
             const initializeState = {
@@ -13,6 +14,8 @@ class ContactPage {
             setState(initializeState);
         }
 
+        this.url = new Url(accountName);
+        this.userPage = new UserPage(store, accountName);
     }
 
     render() {
@@ -40,7 +43,7 @@ class ContactPage {
                         </thead>
 
                         <tbody id="list-of-contacts">
-                            ${this.contactListComponent(users)}
+                            
                         </tbody>
 
                     </table>
@@ -57,9 +60,10 @@ class ContactPage {
             const userFirstName = splitedFullName[0];
             const userLastName = splitedFullName[1];
             const userEmail = user.email;
+            const id = user._id;
 
             const userComponent = /*html*/`
-            <tr class="user">
+            <tr id="${id}" class="user">
                 <td> ${userFirstName} </td>
                 <td> ${userLastName} </td>
                 <td> ${userEmail} </td>
@@ -69,6 +73,19 @@ class ContactPage {
             listStructure += userComponent;
             return listStructure;
         }, ``)
+    }
+
+    renderUsers() {
+        this.url.getUsersFromServer()
+            .then(data => {
+                return data.json()
+            })
+            .then(users => {
+                this.users = users;
+                const listStructure = this.contactListComponent(users);
+                const listOfContacts = document.getElementById('list-of-contacts');
+                listOfContacts.innerHTML = listStructure;
+            })
     }
 
     applyListenerForContactPage() {
@@ -85,20 +102,20 @@ class ContactPage {
 
             if(TH_ELEM_CONTAINS === PREDICT_TEXT_CONTENT.firstName) {
                 const firstName = 0;
-                const sortedListByFirsName = this.mergeSort(users, firstName);
+                const sortedListByFirsName = this.mergeSort(this.users, firstName);
                 listOfContacts.innerHTML = this.contactListComponent(sortedListByFirsName);
                 return;
             }
 
             if(TH_ELEM_CONTAINS === PREDICT_TEXT_CONTENT.lastName) {
                 const lastName = 1;
-                const sortedListByLastName = this.mergeSort(users, lastName);
+                const sortedListByLastName = this.mergeSort(this.users, lastName);
                 listOfContacts.innerHTML = this.contactListComponent(sortedListByLastName);
                 return;
             }
 
             if(TH_ELEM_CONTAINS === PREDICT_TEXT_CONTENT.email) {
-                const sortedListByEmail = this.sortUsersByValue('email', users);
+                const sortedListByEmail = this.sortUsersByValue('email', this.users);
                 listOfContacts.innerHTML = this.contactListComponent(sortedListByEmail);
                 return;
             }
@@ -117,7 +134,25 @@ class ContactPage {
                 : listOfContacts.innerHTML = this.contactListComponent(filteredUsers);
 
             
-        })
+        });
+
+        /* DEFINE USER */
+
+        const listOfContacts = document.getElementById('list-of-contacts');
+        const handlerForListOfContacts = (e) => {
+            if(e.target.parentElement.tagName === "TR") {
+                const id = e.target.parentElement.id;
+                const user = this.users.filter(user => user._id === id)[0];
+                this.userPage.setStateUserPage();
+                const userPage = this.userPage.render(user);
+
+                const MAIN_WRAPER = document.getElementById('main-wraper');
+                MAIN_WRAPER.firstElementChild.outerHTML = userPage;
+                this.userPage.applyListenersForUserPage();
+            }    
+        }
+
+        listOfContacts.addEventListener('click', handlerForListOfContacts);
     }
 
     sortUsersByValue(key, users) {
@@ -161,7 +196,7 @@ class ContactPage {
     }
 
     filterUsersByInputValueByName(inputValue) {
-        return users.reduce((newUsers, user) => {
+        return this.users.reduce((newUsers, user) => {
             const firstName = user.fullName.split(' ')[0].toLowerCase();
 
             const comparedPartOfName = firstName.slice(0, inputValue.length);
