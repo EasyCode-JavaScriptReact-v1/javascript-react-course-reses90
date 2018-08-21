@@ -1,0 +1,82 @@
+*{
+    font-family: 'Nixie One', cursive;
+}
+
+body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.app{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.title{
+    color: rgb(57, 12, 182);
+    font-weight: 300;
+    text-align: center;
+}
+
+#add-task{
+    width: 550px;
+    height: 55px;
+    padding: 16px 16px 16px 60px;
+    background: rgba(104, 88, 88, 0.2);;
+    box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+    border: none;
+    font-size: 24px;
+    transition: .2s ease;
+}
+
+#add-task:hover{
+    cursor: pointer;
+}
+
+#add-task:focus{
+    background-color: #fff;
+}
+
+.task{
+    width: inherit;
+    height: 55px;
+    background-color: rgba(221, 129, 129, 0.2);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wraper-for-task{
+    margin-left: 40px;
+}
+
+.wraper-for-btns{
+    margin-right: 40px;
+}
+
+.fas{
+    font-size: 18px;
+    transition: .1s ease;
+}
+
+.fas:hover{
+    color: rgba(85, 81, 81, 0.6);
+    cursor: pointer;
+}
+
+.fa-edit{
+    margin-right: 10px;
+}
+
+.task-name{
+    font-size: 20px;
+}
+
+.mark-done{
+    cursor: pointer;
+    font-size: 20px;
+}
