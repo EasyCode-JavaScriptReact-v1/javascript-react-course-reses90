@@ -6,12 +6,13 @@ import {UserPage} from '../user-page/user-page';
 class ContactPage {
     constructor(store, accountName) {
         this.setStateContact = () => {
-            const {setState} = store;
+            const {setState, getState} = store;
             const initializeState = {
                 stateName: 'CONTACT',
-                activePage: this.render(),
+                activePage: this.render()
             };
             setState(initializeState);
+            window.history.pushState(initializeState.activePage, initializeState.stateName);
         }
 
         this.url = new Url(accountName);
@@ -143,12 +144,14 @@ class ContactPage {
             if(e.target.parentElement.tagName === "TR") {
                 const id = e.target.parentElement.id;
                 const user = this.users.filter(user => user._id === id)[0];
-                this.userPage.setStateUserPage();
+                this.userPage.setStateUserPage(user);
                 const userPage = this.userPage.render(user);
 
                 const MAIN_WRAPER = document.getElementById('main-wraper');
                 MAIN_WRAPER.firstElementChild.outerHTML = userPage;
                 this.userPage.applyListenersForUserPage();
+
+                window.user = user;
             }    
         }
 

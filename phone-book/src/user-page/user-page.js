@@ -3,12 +3,14 @@ import {Url} from '../url/url';
 
 class UserPage{
     constructor(store, accountName) {
-        this.setStateUserPage = () => {
-            const {setState} = store;
+        this.setStateUserPage = (user) => {
+            const {setState, getState} = store;
             const initializeState = {
                 stateName: 'USER_PAGE',
+                activePage: this.render(user)
             };
             setState(initializeState);
+            window.history.pushState(initializeState.activePage, initializeState.stateName);
         }
 
         this.editUserPage = new EditUserPage(store, accountName);
@@ -74,8 +76,8 @@ class UserPage{
 
         const handlerForButtons = (e) => {
             if(e.target.textContent.trim() === 'Edit') {
-                this.editUserPage.setStateEditUser();
-                const EDIT_USER_PAGE = this.editUserPage.render(this.user);
+                this.editUserPage.setStateEditUser(this.user || window.user);
+                const EDIT_USER_PAGE = this.editUserPage.render(this.user || window.user);
 
                 const MAIN_WRAPER = document.getElementById('main-wraper');
                 MAIN_WRAPER.firstElementChild.outerHTML = EDIT_USER_PAGE;
@@ -85,7 +87,7 @@ class UserPage{
             if(e.target.textContent.trim() === 'Delete') {
                 const requestForDelete = confirm('Are you sure?');
                 if(requestForDelete) {
-                    this.url.deleteUserById(this.user._id);
+                    this.url.deleteUserById(this.user._id || window.user);
 
                     const USER_PAGE = document.getElementById('user-info');
                     USER_PAGE.innerHTML = /*html*/`<h1 class="respond-after-delete">This user was deleted</h1>`;

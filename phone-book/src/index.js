@@ -2,11 +2,14 @@ import {AuthorizationPage} from './authorization-page/authorization-page';
 import {ContactPage} from './contact/contact';
 import {KeypadPage} from './keypad/keypad';
 import {AddUserPage} from './add-user/add-user';
+import {UserPage} from './user-page/user-page';
+import {EditUserPage} from './edit-user-page/edit-user-page';
 
 class App {
     constructor() {
         this.store = this.createStore();
-        this.authorizationPage = new AuthorizationPage();
+        this.authorizationPage = new AuthorizationPage(this.store);
+        this.authorizationPage.setStateAuthorization(this.applyListenerForAuthorizationPage);
         this.renderAuthorizationPage();
     }
     
@@ -31,14 +34,12 @@ class App {
         };
 
         if(action.type === 'MOVE_TO_KEYPAD_PAGE') {
-            this.pages.keypad.setStateKeypad();
             switchBetweenPages();
             this.pages.keypad.applyListenerForKeypadPage();
             return;
         }
 
         if(action.type === 'MOVE_TO_CONTACT_PAGE') {
-            this.pages.contacts.setStateContact();
             switchBetweenPages();
             this.pages.contacts.renderUsers();
             this.pages.contacts.applyListenerForContactPage();
@@ -46,7 +47,6 @@ class App {
         }
 
         if(action.type === 'MOVE_TO_ADD_USER_PAGE') {
-            this.pages.addUser.setStateContact();
             switchBetweenPages();
             this.pages.addUser.applyListenersForAddUserPage();
             return;
@@ -71,7 +71,9 @@ class App {
                     'contacts': new ContactPage(this.store, this.accountName),
                     'keypad': new KeypadPage(this.store, this.accountName),
                     'addUser': new AddUserPage(this.store, this.accountName),
-                    'footer': new FooterNavigationBar()
+                    'footer': new FooterNavigationBar(),
+                    'userPage': new UserPage(this.store, this.accountName),
+                    'editUserPage': new EditUserPage(this.store, this.accountName)
                 }
                 
                 this.pages.contacts.setStateContact();
@@ -116,7 +118,13 @@ class App {
         const mountMode = document.getElementById('mountMode');
         mountMode.innerHTML = appTemplate;
 
-        this.pages.contacts.renderUsers();
+        if(currentState.stateName === 'CONTACT') {this.pages.contacts.renderUsers()};
+    }
+
+    updateView(state) {
+        const mainWraper = document.getElementById('main-wraper');
+
+        mainWraper.firstElementChild.outerHTML = state;
     }
 
     applyListenerForNavigation() {
@@ -174,12 +182,37 @@ class App {
             ) {
 
                 if(currentState.stateName !== 'ADD USER') {
-                    this.pages.addUser.setStateContact();
+                    this.pages.addUser.setStateAddUser();
                     return this.reducer(_MOVE_TO_ADD_USER_PAGE);
                 }
                 return;
             }
         })
+
+        window.addEventListener('popstate', e => {
+            this.updateView(e.state);
+
+            if(/id="user-page"/.test(e.state)) {
+                this.pages.userPage.applyListenersForUserPage();
+            }
+
+            if(/id="contact-wraper"/.test(e.state)) { 
+                this.pages.contacts.renderUsers();
+                this.pages.contacts.applyListenerForContactPage();
+            }
+
+            if(/id="edit-user-page"/.test(e.state)) {
+                this.pages.editUserPage.applyListenersForEditUserPage();
+            }
+
+            if(/id="add-user-page"/.test(e.state)) {
+                this.pages.addUser.applyListenersForAddUserPage();
+            }
+
+            if(/id="keypad-wraper"/.test(e.state)) {
+                this.pages.keypad.applyListenerForKeypadPage();
+            }
+        });
     }
 }
 

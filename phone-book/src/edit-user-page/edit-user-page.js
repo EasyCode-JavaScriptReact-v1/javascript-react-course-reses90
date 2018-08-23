@@ -2,12 +2,14 @@ import {Url} from '../url/url';
 
 class EditUserPage {
     constructor(store, accountName) {
-        this.setStateEditUser = () => {
-            const {setState} = store;
+        this.setStateEditUser = (user) => {
+            const {setState, getState} = store;
             const initializeState = {
                 stateName: 'EDIT USER',
+                activePage: this.render(user)
             };
             setState(initializeState);
+            window.history.pushState(initializeState.activePage, initializeState.stateName);
         }
 
         this.url = new Url(accountName);
@@ -17,7 +19,7 @@ class EditUserPage {
         this.user = user;
 
         return /*html*/`
-            <div id="add-user-page">
+            <div id="edit-user-page">
 
                 <header class="container">
                     <div class="row d-flex justify-content-center">
@@ -232,7 +234,7 @@ class EditUserPage {
             }, {});
 
             if(infoToEdit) {
-                this.url.editUser(infoToEdit, this.user._id);
+                this.url.editUser(infoToEdit, this.user._id || window.user);
 
                 inputs.forEach(input => {
                     if(input.tagName !== "SELECT") {

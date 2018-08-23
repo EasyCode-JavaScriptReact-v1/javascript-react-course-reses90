@@ -2,13 +2,14 @@ import {Url} from '../url/url';
 
 class AddUserPage {
     constructor(store, accountName) {
-        this.setStateContact = () => {
+        this.setStateAddUser = () => {
             const {setState} = store;
             const initializeState = {
                 stateName: 'ADD USER',
                 activePage: this.render(),
             };
             setState(initializeState);
+            window.history.pushState(initializeState.activePage, initializeState.stateName);
         }
 
         this.url = new Url(accountName);

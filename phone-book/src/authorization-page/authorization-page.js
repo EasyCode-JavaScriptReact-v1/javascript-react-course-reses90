@@ -1,12 +1,13 @@
 class AuthorizationPage{
-    constructor() {
-        this.setStateAuthorization = () => {
+    constructor(store) {
+        this.setStateAuthorization = (listeners) => {
             const {setState} = store;
             const initializeState = {
                 stateName: 'AUTHORIZATION',
-                activePage: this.render(),
+                activePage: this.render()
             };
             setState(initializeState);
+            window.history.pushState(initializeState.activePage, initializeState.stateName);
         }
     }
 

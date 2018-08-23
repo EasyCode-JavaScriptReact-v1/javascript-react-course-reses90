@@ -11,6 +11,7 @@ class KeypadPage {
                 activePage: this.render(),
             };
             setState(initializeState);
+            window.history.pushState(initializeState.activePage, initializeState.stateName);
         }
 
         this.callMode = new CallMode();
