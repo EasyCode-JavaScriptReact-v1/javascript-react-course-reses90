@@ -190,27 +190,35 @@ class App {
         })
 
         window.addEventListener('popstate', e => {
-            this.updateView(e.state);
 
             if(/id="user-page"/.test(e.state)) {
+                this.updateView(e.state);
                 this.pages.userPage.applyListenersForUserPage();
             }
 
             if(/id="contact-wraper"/.test(e.state)) { 
+                this.updateView(e.state);
                 this.pages.contacts.renderUsers();
                 this.pages.contacts.applyListenerForContactPage();
             }
 
             if(/id="edit-user-page"/.test(e.state)) {
+                this.updateView(e.state);
                 this.pages.editUserPage.applyListenersForEditUserPage();
             }
 
             if(/id="add-user-page"/.test(e.state)) {
+                this.updateView(e.state);
                 this.pages.addUser.applyListenersForAddUserPage();
             }
 
             if(/id="keypad-wraper"/.test(e.state)) {
+                this.updateView(e.state);
                 this.pages.keypad.applyListenerForKeypadPage();
+            }
+
+            if(/class="authorization-block"/.test(e.state)) {
+                this.renderAuthorizationPage();
             }
         });
     }
