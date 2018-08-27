@@ -1,0 +1,23 @@
+.user-header{
+    font-size: 26px;
+    border-bottom: 2px solid black;
+}
+
+#user-page-avatar{
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.user-page-key{
+    margin-left: 50px;
+}
+
+.user-page-value{
+    margin-right: 50px;
+}
+
+#usp-wraper-for-btns{
+    margin-bottom: 20px;
+}
